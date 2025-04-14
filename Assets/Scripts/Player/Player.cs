@@ -6,7 +6,12 @@ public class Player : MonoBehaviour
      public int health = 10;
 
      private Rigidbody2D rb;
+     public static Player Instance { get; private set; }
 
+     private void Awake()
+     {
+         Instance = this;
+     }
      void Start()
      {
          rb = GetComponent<Rigidbody2D>();
@@ -20,5 +25,11 @@ public class Player : MonoBehaviour
          {
              Destroy(gameObject);
          }
+     }
+
+     public Vector3 GetPlayerScreenPosition()
+     {
+         Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
+         return playerScreenPosition;
      }
 }
