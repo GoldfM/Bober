@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
     public Weapon meleeWeaponSlot;
     public Weapon rangedWeaponSlot;
     public Weapon currentWeapon;
-    private Vector3 FixScale = new Vector3((float)0.5,(float)0.5,0);
+    //private Vector3 FixScale = new Vector3((float)0.5,(float)0.5,0);
     void Start()
     {
         EquipWeapon(meleeWeaponSlot);
@@ -64,7 +64,7 @@ public class PlayerInventory : MonoBehaviour
             }
             currentWeapon = weapon;
             currentWeapon.gameObject.SetActive(true);
-            currentWeapon.transform.localScale=FixScale;
+           // currentWeapon.transform.localScale=FixScale;
             currentWeapon.OnEquip();
         }
     }
