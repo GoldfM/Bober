@@ -20,15 +20,22 @@ public class RotateTowardsMouse : MonoBehaviour
         Vector2 direction = mousePosition - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
+        Vector3 scale = transform.localScale;
         // Флип спрайта в зависимости от положения мыши относительно игрока
         if (mousePosition.x > transform.position.x)
         {
-            spriteRenderer.flipY = false; // Мышь справа - не флипаем
+            if (scale.y < 0)
+                scale.y = -scale.y;
+            //spriteRenderer.flipY = false;
         }
         else
         {
-            spriteRenderer.flipY = true; // Мышь слева - флипаем
+            scale.y = -scale.y;
+            if (scale.y > 0)
+                scale.y = -scale.y;
+            //spriteRenderer.flipY = true; // Мышь слева - флипаем
         }
+
+        transform.localScale = scale;
     }
 }

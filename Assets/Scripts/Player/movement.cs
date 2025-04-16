@@ -15,6 +15,7 @@ public class movement : MonoBehaviour
     {
         moveVector.x = Input.GetAxis("Horizontal");
         moveVector.y = Input.GetAxis("Vertical");
-        rb.MovePosition(rb.position + moveVector * speed * Time.deltaTime);
+        rb.linearVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
+        //rb.MovePosition(rb.position + moveVector * speed * Time.deltaTime);
     }
 }
