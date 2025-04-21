@@ -14,7 +14,7 @@ public class EnemyRangeMove : MonoBehaviour
     private State currentState = State.Chase;
     private SpriteRenderer spriteRenderer;
     public Transform weaponTransform;
-    private bool isRight = true;
+    private bool isRight = false;
 
     void Start()
     {
@@ -86,24 +86,24 @@ public class EnemyRangeMove : MonoBehaviour
     {
         if (player.position.x > transform.position.x)
         {
-            spriteRenderer.flipX = false;
+            spriteRenderer.flipX = true;
             if (!isRight)
             {
                 if (weaponTransform != null)
                 {
-                    weaponTransform.localScale = new Vector3(weaponTransform.localScale.x * -1, weaponTransform.localScale.y, weaponTransform.localScale.z);
+                    //weaponTransform.localScale = new Vector3(weaponTransform.localScale.x * -1, weaponTransform.localScale.y, weaponTransform.localScale.z);
                 }
                 isRight = true;
             }
         }
         else
         {
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = false;
             if (isRight)
             {
                 if (weaponTransform != null)
                 {
-                    weaponTransform.localScale = new Vector3(weaponTransform.localScale.x * -1, weaponTransform.localScale.y, weaponTransform.localScale.z);
+                    //weaponTransform.localScale = new Vector3(weaponTransform.localScale.x * -1, weaponTransform.localScale.y, weaponTransform.localScale.z);
                 }
                 isRight = false;
             }
