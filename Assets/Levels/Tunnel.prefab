@@ -979,6 +979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6341026112023126610}
   - component: {fileID: 2610530107415432437}
+  - component: {fileID: -1357099832087177812}
   m_Layer: 0
   m_Name: Tunnel
   m_TagString: Untagged
@@ -1009,7 +1010,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7076037584124788839}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1048,6 +1049,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 7.9556646, y: 5.100691}
   m_EdgeRadius: 0
+--- !u!114 &-1357099832087177812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7076037584124788839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86587ddd20708774d85435edbe04dbaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7908581095127943229
 GameObject:
   m_ObjectHideFlags: 0

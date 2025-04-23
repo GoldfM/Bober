@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class LevelGenerator : MonoBehaviour
     {
         // Начальное положение для первой комнаты
         Vector2 lastRoomExit = Vector2.zero;
+        RoomClear previousRoom = null;
 
         // Генерация уровня с несколькими комнатами
         for (int i = 0; i < numberOfRooms; i++)
@@ -27,23 +29,121 @@ public class LevelGenerator : MonoBehaviour
             // Позиционирование для каждой комнаты
             Vector3 roomPosition = new Vector3(i * (roomWidth + tunnelLength), 0, 0);
             GameObject room = Instantiate(roomPrefab, roomPosition, Quaternion.identity);
+            room.tag = "Room"; // Важно установить тег для комнаты
+
+            // Get existing RoomClear component
+            RoomClear roomClear = room.GetComponent<RoomClear>();
+
+            // Find Entry and Exit objects - adjust the names to match your prefabs
+            roomClear.Entry = FindDeepChild(room.transform, "Entry")?.gameObject;
+            roomClear.Exit = FindDeepChild(room.transform, "Exit")?.gameObject;
+
+            if (roomClear.Entry == null)
+            {
+                Debug.LogError("Entry object not found in the room!");
+            }
+
+            if (roomClear.Exit == null)
+            {
+                Debug.LogError("Exit object not found in the room!");
+            }
+
+            // Handle Entry for the first room
+            if (i == 0)
+            {
+                // Set Entry to null for the first room
+                roomClear.Entry = null;
+            }
+            else
+            {
+                DisableEnemies(room);
+                // Disable the Entry GameObject for other rooms
+                if (roomClear.Entry != null)
+                {
+                    roomClear.Entry.SetActive(false);
+                }
+            }
+
+            // Find all enemies in the room and disable their components
+            
+
+            // Set room index and level generator reference
+            roomClear.roomIndex = i;
+            roomClear.levelGenerator = this;
 
             if (i > 0)
             {
                 // Определяем позицию для создания моста
                 Vector2 tunnelPosition = new Vector2(roomPosition.x - roomWidth / 2 - tunnelLength / 2, roomPosition.y + GetRoomHeight(roomPrefab) / 2);
-                CreateCorridor(tunnelPosition);
+                Tunnel tunnel = CreateCorridor(tunnelPosition).GetComponent<Tunnel>();
+
+                // Set previous and next room references
+                tunnel.previousRoom = previousRoom;
+                tunnel.nextRoom = roomClear;
+
+                // Set tunnel triggers (you'll need to define these in the Tunnel script)
+                // Example: tunnel.entryTrigger = ...;
+                // Example: tunnel.exitTrigger = ...;
             }
 
             // Обновляем позицию выхода для следующей комнаты
             lastRoomExit = new Vector2(roomPosition.x + roomWidth, roomPosition.y + GetRoomHeight(roomPrefab) / 2);
+            previousRoom = roomClear;
         }
     }
 
-    private void CreateCorridor(Vector2 tunnelPosition)
+    private void DisableEnemies(GameObject room)
+    {
+        // Get all EnemyRangeMove components in the room
+        EnemyRangeMove[] enemyRangeMoves = room.GetComponentsInChildren<EnemyRangeMove>();
+        foreach (EnemyRangeMove enemyRangeMove in enemyRangeMoves)
+        {
+            enemyRangeMove.enabled = false;
+        }
+
+        // Get all Enemy components in the room
+        Enemy[] enemies = room.GetComponentsInChildren<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.enabled = false;
+        }
+
+        // Get all EnemyRangeWeapon components in the room
+        EnemyRangeWeapon[] enemyRangeWeapons = room.GetComponentsInChildren<EnemyRangeWeapon>();
+        foreach (EnemyRangeWeapon enemyRangeWeapon in enemyRangeWeapons)
+        {
+            enemyRangeWeapon.enabled = false;
+        }
+
+        // Get all GameObjects with the tag "EnemyWeapon" in the room
+        Transform[] enemyWeapons = room.GetComponentsInChildren<Transform>();
+        foreach (Transform enemyWeapon in enemyWeapons)
+        {
+            if (enemyWeapon.CompareTag("EnemyWeapon"))
+            {
+                enemyWeapon.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private Transform FindDeepChild(Transform parent, string name)
+    {
+        var result = parent.Find(name);
+        if (result != null)
+            return result;
+        foreach (Transform child in parent)
+        {
+            result = FindDeepChild(child, name);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    private GameObject CreateCorridor(Vector2 tunnelPosition)
     {
         // Инстанцируем туннель в заданной позиции без вращения и масштабирования
-        Instantiate(tunnelPrefab, tunnelPosition, Quaternion.identity);
+        return Instantiate(tunnelPrefab, tunnelPosition, Quaternion.identity);
     }
 
     // Метод для получения высоты комнаты
@@ -52,5 +152,72 @@ public class LevelGenerator : MonoBehaviour
         // Получаем размеры через 2D Collider
         Bounds bounds = roomPrefab.GetComponent<Collider2D>().bounds;
         return bounds.size.y; // Возвращаем высоту
+    }
+
+    // Call this method when the player enters a room
+    public void ActivateRoom(int roomIndex)
+    {
+        // Find the room by index
+        GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
+        GameObject roomToActivate = null;
+        foreach (GameObject room in rooms)
+        {
+            RoomClear roomClear = room.GetComponent<RoomClear>();
+            if (roomClear != null && roomClear.roomIndex == roomIndex)
+            {
+                roomToActivate = room;
+                break;
+            }
+        }
+
+        if (roomToActivate == null)
+        {
+            Debug.LogError("Room with index " + roomIndex + " not found");
+            return;
+        }
+
+        // Activate enemies in the room
+        EnableEnemies(roomToActivate);
+
+        // Activate Entry, if it's not null
+        RoomClear roomClearComponent = roomToActivate.GetComponent<RoomClear>();
+        if (roomClearComponent != null && roomClearComponent.Entry != null)
+        {
+            roomClearComponent.Entry.SetActive(true);
+        }
+    }
+
+    private void EnableEnemies(GameObject room)
+    {
+        // Get all EnemyRangeMove components in the room
+        EnemyRangeMove[] enemyRangeMoves = room.GetComponentsInChildren<EnemyRangeMove>();
+        foreach (EnemyRangeMove enemyRangeMove in enemyRangeMoves)
+        {
+            enemyRangeMove.enabled = true;
+        }
+
+        // Get all Enemy components in the room
+        Enemy[] enemies = room.GetComponentsInChildren<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.enabled = true;
+        }
+
+        // Get all EnemyRangeWeapon components in the room
+        EnemyRangeWeapon[] enemyRangeWeapons = room.GetComponentsInChildren<EnemyRangeWeapon>();
+        foreach (EnemyRangeWeapon enemyRangeWeapon in enemyRangeWeapons)
+        {
+            enemyRangeWeapon.enabled = true;
+        }
+
+        // Get all GameObjects with the tag "EnemyWeapon" in the room
+        Transform[] enemyWeapons = room.GetComponentsInChildren<Transform>();
+        foreach (Transform enemyWeapon in enemyWeapons)
+        {
+            if (enemyWeapon.CompareTag("EnemyWeapon"))
+            {
+                enemyWeapon.gameObject.SetActive(true);
+            }
+        }
     }
 }
