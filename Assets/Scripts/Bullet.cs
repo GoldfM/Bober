@@ -22,6 +22,10 @@
             enemy.TakeDamage(damage);
             Destroy(gameObject);
         }
+
+        if (collision.tag == "Walls"){
+            Destroy(gameObject);
+        }
     }
 
  }

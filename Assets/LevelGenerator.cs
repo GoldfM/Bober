@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -53,6 +54,14 @@ public class LevelGenerator : MonoBehaviour
             {
                 // Set Entry to null for the first room
                 roomClear.Entry = null;
+                CinemachineConfiner confiner = GameObject.Find("CinemachineCamera")
+                                                  .GetComponent<CinemachineConfiner>();
+
+                // Устанавливаем Bounding Shape 2D
+                confiner.m_BoundingShape2D = room.GetComponent<Collider2D>();
+
+                // Обновляем границы камеры
+                confiner.InvalidateCache();
             }
             else
             {
