@@ -271,7 +271,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.32
+  orthographic size: 9.3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -433,6 +433,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &889690011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5085427786321088465, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+  m_PrefabInstance: {fileID: 5926825126291500633}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c6828901c6dce43b8d86414b3d51fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1388588929
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +662,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 7.32
+    OrthographicSize: 9.3
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -784,7 +795,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 46.8024, y: 0.8994, z: 0}
-  m_LocalScale: {x: -126.05138, y: -71.718994, z: -72.67}
+  m_LocalScale: {x: -1274.0013, y: -724.8639, z: -734.4757}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -800,6 +811,18 @@ PrefabInstance:
     - target: {fileID: 2440565065849299124, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962176071455511555, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: meleeWeaponSlot
+      value: 
+      objectReference: {fileID: 889690011}
+    - target: {fileID: 8419981370412273121, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_Name
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530475278541905995, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8771910007872895205, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -842,7 +865,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -5059954087293805237, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+    - {fileID: -3931233315534747699, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}

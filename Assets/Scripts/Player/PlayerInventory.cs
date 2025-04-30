@@ -35,6 +35,7 @@ public class PlayerInventory : MonoBehaviour
         switch (weapon.Type)
         {
             case WeaponType.Melee:
+                weapon.transform.position = meleeWeaponSlot.transform.position;
                 if (meleeWeaponSlot != null)
                 {
                     DropWeapon(meleeWeaponSlot);
@@ -43,6 +44,7 @@ public class PlayerInventory : MonoBehaviour
                 EquipWeapon(meleeWeaponSlot);
                 break;
             case WeaponType.Ranged:
+                 weapon.transform.position = rangedWeaponSlot.transform.position;
                 if (rangedWeaponSlot != null)
                 {
                     DropWeapon(rangedWeaponSlot);
@@ -60,12 +62,12 @@ public class PlayerInventory : MonoBehaviour
             if (currentWeapon != null)
             {
                 currentWeapon.gameObject.SetActive(false);
-                currentWeapon.OnUnequip();
+                //currentWeapon.OnUnequip();
             }
             currentWeapon = weapon;
             currentWeapon.gameObject.SetActive(true);
            // currentWeapon.transform.localScale=FixScale;
-            currentWeapon.OnEquip();
+            //currentWeapon.OnEquip();
         }
     }
 
@@ -88,7 +90,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (weapon != null)
         {
-            weapon.OnUnequip();
+            //weapon.OnUnequip();
             weapon.transform.SetParent(null);
             weapon.gameObject.SetActive(true);
             //добавляем скрипт подбора
@@ -96,11 +98,6 @@ public class PlayerInventory : MonoBehaviour
             {
                 GameObject droppedWeapon = Instantiate(weapon.pickupPrefab, transform.position, Quaternion.identity);
             }
-            if (weapon == meleeWeaponSlot)
-                meleeWeaponSlot = null;
-            else
-                rangedWeaponSlot = null;
-
             Destroy(weapon.gameObject);
         }
     }

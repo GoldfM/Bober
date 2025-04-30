@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9093878085662314553}
   - component: {fileID: 8539653720613683926}
   m_Layer: 0
-  m_Name: PlaceSword
+  m_Name: PlaceKnife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1540682604, guid: 73d0113a1e915e84e8bbfff95c0e72bc, type: 3}
+  m_Sprite: {fileID: 2113705999, guid: b28ce2d46e858b64f81c822d0e8029c6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,5 +100,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2e706abf1bf33d41ae84246153230bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 7513422175120387160, guid: 92ee9814ad8544d4187e02ee59062ff2, type: 3}
+  weaponPrefab: {fileID: 7513422175120387160, guid: 5a2e213ca2564da429aadb23f4c006a6, type: 3}
   pickupRange: 1

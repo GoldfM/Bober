@@ -776,6 +776,7 @@ GameObject:
   - component: {fileID: 631050453}
   - component: {fileID: 631050452}
   - component: {fileID: 631050454}
+  - component: {fileID: 631050455}
   m_Layer: 0
   m_Name: "\u0441\u043A\u0443\u0444 2_0"
   m_TagString: Untagged
@@ -866,6 +867,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradePanel: {fileID: 1626013686}
+--- !u!61 &631050455
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631050451}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.875, y: 3.5}
+    newSize: {x: 1.875, y: 3.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.875, y: 3.5}
+  m_EdgeRadius: 0
 --- !u!1 &640262796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,6 +1457,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861016391}
   m_CullTransparentMesh: 1
+--- !u!114 &893747723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5085427786321088465, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+  m_PrefabInstance: {fileID: 1649527303}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c6828901c6dce43b8d86414b3d51fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &908954285
 GameObject:
   m_ObjectHideFlags: 0
@@ -5018,9 +5076,101 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 36872387466306409, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 611328517764512432, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920053534710944905, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1540682604, guid: 73d0113a1e915e84e8bbfff95c0e72bc, type: 3}
     - target: {fileID: 2440565065849299124, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698669107198265180, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.224225
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698669107198265180, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.224225
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698669107198265180, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.16322999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698669107198265180, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698669107198265180, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005867430197364531, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5085427786321088465, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247616635746339711, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6650777616750569944, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962176071455511555, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: meleeWeaponSlot
+      value: 
+      objectReference: {fileID: 893747723}
+    - target: {fileID: 8122569095596588465, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8122569095596588465, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: fireRate
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8122569095596588465, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: swordCollider
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198647404044513233, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320350787872215453, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320350787872215453, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.16321598
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320350787872215453, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.19082135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320350787872215453, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.9375
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320350787872215453, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.9375
+      objectReference: {fileID: 0}
+    - target: {fileID: 8419981370412273121, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8771910007872895205, guid: 18354d095efad404e8c8f7ea87cd797c, type: 3}
       propertyPath: m_LocalPosition.x

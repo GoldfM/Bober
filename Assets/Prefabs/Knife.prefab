@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 365550963070889773}
   - component: {fileID: 6391819637939225538}
   m_Layer: 0
-  m_Name: Sword
+  m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: 
   icon: {fileID: 0}
-  pickupPrefab: {fileID: 1175262591671716177, guid: 03fa14b518830b140a5a7054cfb088c5, type: 3}
+  pickupPrefab: {fileID: 1175262591671716177, guid: a6508317f7aad4c47b9369f832957cd0, type: 3}
   fireRate: 0.5
   animator: {fileID: 4181093194854067568}
   swordCollider: {fileID: 6391819637939225538}
@@ -120,7 +120,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1540682604, guid: 73d0113a1e915e84e8bbfff95c0e72bc, type: 3}
+  m_Sprite: {fileID: 2113705999, guid: b28ce2d46e858b64f81c822d0e8029c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
