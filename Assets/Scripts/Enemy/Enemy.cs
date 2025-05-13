@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [Header("Настройки дропа")]
     public GameObject coinPrefab; // Префаб монеты
     public GameObject healthPickupPrefab; // Префаб хилки
-    public GameObject weaponPrefab; // Префаб оружия
+    public GameObject[] weaponPrefabs; // Массив префабов оружия
 
     [Range(0, 1)] public float coinDropChance = 0.3f; // Вероятность выпадения монеты
     [Range(0, 1)] public float healthDropChance = 0.2f; // Вероятность выпадения хилки
@@ -38,7 +38,12 @@ public class Enemy : MonoBehaviour
         }
         else if (randomValue < coinDropChance + healthDropChance + weaponDropChance)
         {
-            Instantiate(weaponPrefab, transform.position, Quaternion.identity);
+            if (weaponPrefabs != null && weaponPrefabs.Length > 0)
+            {
+                // Выбираем случайное оружие из списка
+                GameObject weaponToDrop = weaponPrefabs[Random.Range(0, weaponPrefabs.Length)];
+                Instantiate(weaponToDrop, transform.position, Quaternion.identity);
+            }
         }
         // Если ничего не выпало, ничего не делаем
     }

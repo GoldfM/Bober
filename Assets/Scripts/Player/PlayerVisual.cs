@@ -21,11 +21,11 @@ public class PlayerVisual : MonoBehaviour
         Vector3 mousePosition = GameInput.Instance.GetMousePos();
         if (mousePosition.x < playerPos.x)
         {
-            spriteRenderer.flipX = true;
+            transform.parent.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
-            spriteRenderer.flipX = false;
+            transform.parent.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }

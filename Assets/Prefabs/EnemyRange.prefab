@@ -148,9 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c96ae8d7388bb46b0f9e1077d552d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
   health: 5
   damage: 1
+  coinPrefab: {fileID: 3208735130746201606, guid: 41cd0cccdf9458644b076606cba14904, type: 3}
+  healthPickupPrefab: {fileID: 0}
+  weaponPrefabs: []
+  coinDropChance: 0.3
+  healthDropChance: 0.2
+  weaponDropChance: 0.1
 --- !u!70 &1776152565102786052
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

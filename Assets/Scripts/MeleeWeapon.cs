@@ -20,10 +20,32 @@ public class MeleeWeapon : Weapon
         {
             Attack();
         }
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Vector3 scale = transform.localScale;
+        // Флип спрайта в зависимости от положения мыши относительно игрока
+        if (mousePosition.x > transform.position.x)
+        {
+            if (scale.y < 0)
+                scale.y = -scale.y;
+            //spriteRenderer.flipY = false;
+        }
+        else
+        {
+            scale.y = -scale.y;
+            if (scale.y > 0)
+                scale.y = -scale.y;
+            //spriteRenderer.flipY = true; // Мышь слева - флипаем
+        }
+
+        transform.localScale = scale;
+
+
     }
 
     public override void Attack()
     {
+
         animator.SetInteger("IsAttack", 1);
         swordCollider.enabled = true;
     }
