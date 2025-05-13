@@ -5,6 +5,7 @@ using Unity.Cinemachine;
 public class LevelGenerator : MonoBehaviour
 {
     public GameObject[] roomPrefabs; // Массив префабов комнат
+    public GameObject[] bossRoomPrefabs;
     public GameObject tunnelPrefab; // Префаб коридора
     public int numberOfRooms = 5; // Количество комнат в уровне
     public float roomWidth = 37f; // Фиксированная ширина комнаты
@@ -24,8 +25,18 @@ public class LevelGenerator : MonoBehaviour
         // Генерация уровня с несколькими комнатами
         for (int i = 0; i < numberOfRooms; i++)
         {
-            // Случайный выбор комнаты
-            GameObject roomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Length)];
+            GameObject roomPrefab;
+            bool isLastRoom = (i == numberOfRooms - 1); // Проверяем, является ли комната последней
+
+            // Если это последняя комната, выбираем комнату босса
+            if (isLastRoom && bossRoomPrefabs.Length > 0)
+            {
+                roomPrefab = bossRoomPrefabs[Random.Range(0, bossRoomPrefabs.Length)];
+            }
+            else
+            {
+                roomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Length)];
+            }
 
             // Позиционирование для каждой комнаты
             Vector3 roomPosition = new Vector3(i * (roomWidth + tunnelLength), 0, 0);
@@ -43,7 +54,6 @@ public class LevelGenerator : MonoBehaviour
             {
                 Debug.LogError("Entry object not found in the room!");
             }
-
             if (roomClear.Exit == null)
             {
                 Debug.LogError("Exit object not found in the room!");
@@ -55,11 +65,9 @@ public class LevelGenerator : MonoBehaviour
                 // Set Entry to null for the first room
                 roomClear.Entry = null;
                 CinemachineConfiner confiner = GameObject.Find("CinemachineCamera")
-                                                  .GetComponent<CinemachineConfiner>();
-
+                    .GetComponent<CinemachineConfiner>();
                 // Устанавливаем Bounding Shape 2D
                 confiner.m_BoundingShape2D = room.GetComponent<Collider2D>();
-
                 // Обновляем границы камеры
                 confiner.InvalidateCache();
             }
@@ -73,13 +81,11 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
 
-            // Find all enemies in the room and disable their components
-            
-
             // Set room index and level generator reference
             roomClear.roomIndex = i;
             roomClear.levelGenerator = this;
 
+            // Создаем туннель, если это не первая комната
             if (i > 0)
             {
                 // Определяем позицию для создания моста
@@ -89,10 +95,6 @@ public class LevelGenerator : MonoBehaviour
                 // Set previous and next room references
                 tunnel.previousRoom = previousRoom;
                 tunnel.nextRoom = roomClear;
-
-                // Set tunnel triggers (you'll need to define these in the Tunnel script)
-                // Example: tunnel.entryTrigger = ...;
-                // Example: tunnel.exitTrigger = ...;
             }
 
             // Обновляем позицию выхода для следующей комнаты
