@@ -7,6 +7,7 @@ public class EnemyRangeMove : MonoBehaviour
     public float chaseDuration = 5f;
     public float wanderDuration = 5f;
     public float idleDuration = 3f;
+    public float randomDeviation = 1f; // Добавляем параметр для случайного отклонения
     private Transform player;
     private Vector3 randomDirection;
     private float timer;
@@ -15,12 +16,16 @@ public class EnemyRangeMove : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Transform weaponTransform;
     private bool isRight = false;
+    private float currentChaseDuration;
+    private float currentWanderDuration;
+    private float currentIdleDuration;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         timer = 0f;
+        SetRandomDurations();
     }
 
     void Update()
@@ -31,27 +36,30 @@ public class EnemyRangeMove : MonoBehaviour
         {
             case State.Chase:
                 ChasePlayer();
-                if (timer >= chaseDuration)
+                if (timer >= currentChaseDuration)
                 {
                     currentState = State.Wander;
                     timer = 0f;
                     SetRandomDirection();
+                    SetRandomDurations(); // Обновляем длительности при смене состояния
                 }
                 break;
             case State.Wander:
                 Wander();
-                if (timer >= wanderDuration)
+                if (timer >= currentWanderDuration)
                 {
                     currentState = State.Idle;
                     timer = 0f;
+                    SetRandomDurations(); // Обновляем длительности при смене состояния
                 }
                 break;
             case State.Idle:
                 Idle();
-                if (timer >= idleDuration)
+                if (timer >= currentIdleDuration)
                 {
                     currentState = State.Chase;
                     timer = 0f;
+                    SetRandomDurations(); // Обновляем длительности при смене состояния
                 }
                 break;
         }
@@ -91,7 +99,7 @@ public class EnemyRangeMove : MonoBehaviour
             {
                 if (weaponTransform != null)
                 {
-                    //weaponTransform.localScale = new Vector3(weaponTransform.localScale.x * -1, weaponTransform.localScale.y, weaponTransform.localScale.z);
+                    //weaponTransform.rotation = new Quaternion(0,180,0);
                 }
                 isRight = true;
             }
@@ -108,5 +116,17 @@ public class EnemyRangeMove : MonoBehaviour
                 isRight = false;
             }
         }
+    }
+
+    void SetRandomDurations()
+    {
+        currentChaseDuration = chaseDuration + Random.Range(-randomDeviation, randomDeviation);
+        currentWanderDuration = wanderDuration + Random.Range(-randomDeviation, randomDeviation);
+        currentIdleDuration = idleDuration + Random.Range(-randomDeviation, randomDeviation);
+
+        // Гарантируем, что длительность не станет отрицательной
+        currentChaseDuration = Mathf.Max(0, currentChaseDuration);
+        currentWanderDuration = Mathf.Max(0, currentWanderDuration);
+        currentIdleDuration = Mathf.Max(0, currentIdleDuration);
     }
 }

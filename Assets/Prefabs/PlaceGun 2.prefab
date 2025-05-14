@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4173016865690099173}
   - component: {fileID: 7315508841921170536}
   - component: {fileID: 6275140578019845104}
+  - component: {fileID: -1684561727471135745}
   m_Layer: 0
   m_Name: PlaceGun 2
   m_TagString: Untagged
@@ -103,6 +104,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: -6860900436660978415, guid: 0c29aa643c40ea74a817633e79f7c849, type: 3}
   pickupRange: 1
+--- !u!61 &-1684561727471135745
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876249987314921897}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.9151323, y: 0.08818264}
+  m_SpriteTilingProperty:
+    border: {x: 0.1875, y: 0, z: 0, w: 0.0625}
+    pivot: {x: 0.22140604, y: 0.43035147}
+    oldSize: {x: 4, y: 1}
+    newSize: {x: 0.11, y: 0.09}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 3.601513, y: 0.88879454}
+  m_EdgeRadius: 0
 --- !u!1 &6868195497963990884
 GameObject:
   m_ObjectHideFlags: 0

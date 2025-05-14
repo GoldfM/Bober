@@ -89,7 +89,7 @@ public class LevelGenerator : MonoBehaviour
             if (i > 0)
             {
                 // Определяем позицию для создания моста
-                Vector2 tunnelPosition = new Vector2(roomPosition.x - roomWidth / 2 - tunnelLength / 2, roomPosition.y + GetRoomHeight(roomPrefab) / 2);
+                Vector2 tunnelPosition = new Vector2((float)0.5+roomPosition.x - roomWidth / 2 - tunnelLength / 2, roomPosition.y + GetRoomHeight(roomPrefab) / 2);
                 Tunnel tunnel = CreateCorridor(tunnelPosition).GetComponent<Tunnel>();
 
                 // Set previous and next room references

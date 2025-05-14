@@ -106,7 +106,7 @@ MonoBehaviour:
   weaponName: Gun
   icon: {fileID: -6628414004274166170, guid: f6a73097b168b4c43a14aeebee4125f4, type: 3}
   pickupPrefab: {fileID: 5876249987314921897, guid: 119d0d0d190bd494c994c97bffdf8e61, type: 3}
-  projectilePrefab: {fileID: 2852000725816838326, guid: 0f110480306a92f45989226cc7a6938a, type: 3}
+  projectilePrefab: {fileID: 2852000725816838326, guid: 73ade07496518ac4090841f470a701e6, type: 3}
   firePoint: {fileID: 7333426175728031953}
   fireRate: 2
 --- !u!114 &2605669610591863009
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5876249987314921897}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df036549560eb7a438369f33db5fd5a7, type: 3}
   m_Name: 

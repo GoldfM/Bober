@@ -15,6 +15,7 @@ public class UpgradeManager : MonoBehaviour
     //public PlayerController playerController;
     void Start()
     {
+        
         LoadUpgrades();
         UpdateUI();
     }

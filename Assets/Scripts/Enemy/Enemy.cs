@@ -14,6 +14,13 @@ public class Enemy : MonoBehaviour
     [Range(0, 1)] public float healthDropChance = 0.2f; // Вероятность выпадения хилки
     [Range(0, 1)] public float weaponDropChance = 0.1f; // Вероятность выпадения оружия
 
+    private Transform levelParent; // Ссылка на объект Level, теперь приватная
+    void Awake() // Use Awake to ensure levelParent is set before other Start() methods
+    {
+        levelParent = transform.parent; // Assign the parent of the enemy to levelParent
+    }
+
+
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -27,27 +34,32 @@ public class Enemy : MonoBehaviour
     void DropItem()
     {
         float randomValue = Random.value;
-
-        if (randomValue < coinDropChance)
-        {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
-        }
-        else if (randomValue < coinDropChance + healthDropChance)
-        {
-            Instantiate(healthPickupPrefab, transform.position, Quaternion.identity);
-        }
-        else if (randomValue < coinDropChance + healthDropChance + weaponDropChance)
+        GameObject drop1 = null; // Объявляем переменную drop
+        if (randomValue < weaponDropChance)
         {
             if (weaponPrefabs != null && weaponPrefabs.Length > 0)
             {
-                // Выбираем случайное оружие из списка
                 GameObject weaponToDrop = weaponPrefabs[Random.Range(0, weaponPrefabs.Length)];
-                Instantiate(weaponToDrop, transform.position, Quaternion.identity);
+                drop1 = Instantiate(weaponToDrop, transform.position, Quaternion.identity);
+                
             }
         }
-        // Если ничего не выпало, ничего не делаем
+        else if (randomValue < healthDropChance)
+        {
+            drop1 = Instantiate(healthPickupPrefab, transform.position, Quaternion.identity);
+        }
+        if (randomValue < coinDropChance)
+        {
+            drop1 = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+        }
+        if (drop1 != null && levelParent != null)
+    {
+        Debug.Log("Drop Position before parenting: " + drop1.transform.position);
+        Debug.Log("Level Parent Position: " + levelParent.position);
+        drop1.transform.SetParent(levelParent, worldPositionStays: true);
+        Debug.Log("Drop Position after parenting: " + drop1.transform.position);
     }
-
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

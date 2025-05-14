@@ -66,6 +66,7 @@ public class PlayerInventory : MonoBehaviour
             }
             currentWeapon = weapon;
             currentWeapon.gameObject.SetActive(true);
+            currentWeapon.transform.rotation = new Quaternion(0,0,0,0);
            // currentWeapon.transform.localScale=FixScale;
             //currentWeapon.OnEquip();
         }
