@@ -1,18 +1,35 @@
-using System;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+    private PauseMenu pauseMenu; // Ссылка на компонент PauseMenu
 
     public void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    void Start()
+    {
+        // Поиск объекта LevelManager и получение компонента PauseMenu
+        GameObject levelManager = GameObject.Find("LevelManager");
+        if (levelManager != null)
+        {
+            pauseMenu = levelManager.GetComponent<PauseMenu>();
+        }
+        else
+        {
+            Debug.LogError("Объект LevelManager не найден на сцене!");
+        }
+    }
+
     private void Update()
     {
-        ChangePlayerFacingDirection();
+        if (pauseMenu != null && !pauseMenu.isPaused) // Проверяем, в состоянии ли паузы
+        {
+            ChangePlayerFacingDirection();
+        }
     }
 
     private void ChangePlayerFacingDirection()

@@ -14,7 +14,6 @@ public class MeleeWeapon : Weapon
         // Поворот меча к мыши
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 direction = (mousePosition - transform.position).normalized;
-        transform.up = direction;
 
         if (Input.GetMouseButton(0) && Time.time > nextFire && animator.GetInteger("IsAttack") == 0)
         {

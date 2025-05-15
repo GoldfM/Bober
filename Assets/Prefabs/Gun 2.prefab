@@ -108,7 +108,7 @@ MonoBehaviour:
   pickupPrefab: {fileID: 5876249987314921897, guid: 119d0d0d190bd494c994c97bffdf8e61, type: 3}
   projectilePrefab: {fileID: 2852000725816838326, guid: 73ade07496518ac4090841f470a701e6, type: 3}
   firePoint: {fileID: 7333426175728031953}
-  fireRate: 2
+  fireRate: 3
 --- !u!114 &2605669610591863009
 MonoBehaviour:
   m_ObjectHideFlags: 0

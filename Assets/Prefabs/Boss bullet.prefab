@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8495677341244058979}
   - component: {fileID: 2775034021309998947}
+  - component: {fileID: 8835536055233190740}
   - component: {fileID: 4632411736370040691}
-  - component: {fileID: 5411066894909396921}
   - component: {fileID: -3952304300745494714}
   m_Layer: 0
-  m_Name: SniperBullet
-  m_TagString: Untagged
+  m_Name: Boss bullet
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.037532207, y: -0.33778995, z: 0}
-  m_LocalScale: {x: 5, y: 2.5, z: 1}
+  m_LocalScale: {x: -1.0658439, y: 1.0658439, z: 4.2633758}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3337038689812066966, guid: cb0cdd91c71d94b49b3d4f1678e596c0, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.13269353, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 6d40a9ffc86b31c4d8acf7aeac14ebd4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -90,6 +90,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8835536055233190740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852000725816838326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff462db840d9b2741a1a0f79e26bd114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 12
+  lifeTime: 3
+  damage: 2
 --- !u!50 &4632411736370040691
 Rigidbody2D:
   serializedVersion: 5
@@ -116,22 +131,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &5411066894909396921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2852000725816838326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49572287741c5864f88b1a742eb3c5c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 40
-  lifeTime: 3
-  damage: 10
+  m_Constraints: 4
 --- !u!61 &-3952304300745494714
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -168,9 +168,9 @@ BoxCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.08, y: 0.03}
+    border: {x: 0.125, y: 0.25, z: 0.3125, w: 0.1875}
+    pivot: {x: 0.4033816, y: 0.5310559}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.08, y: 0.03}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

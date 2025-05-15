@@ -1,9 +1,10 @@
 using UnityEngine;
-
+using System.Collections;
 public class Enemy : MonoBehaviour
 {
-    public int health = 1;
-    public int damage = 1;
+    public int maxHealth = 1; // Максимальное здоровье врага
+    public int currentHealth; // Текущее здоровье врага
+    public int damage = 1; // Урон, наносимый врагом
 
     [Header("Настройки дропа")]
     public GameObject coinPrefab; // Префаб монеты
@@ -14,20 +15,76 @@ public class Enemy : MonoBehaviour
     [Range(0, 1)] public float healthDropChance = 0.2f; // Вероятность выпадения хилки
     [Range(0, 1)] public float weaponDropChance = 0.1f; // Вероятность выпадения оружия
 
-    private Transform levelParent; // Ссылка на объект Level, теперь приватная
-    void Awake() // Use Awake to ensure levelParent is set before other Start() methods
+    private Transform levelParent; // Ссылка на объект Level
+    private Transform healthBar; // Полоса здоровья
+    private float initialHealthBarWidth; // Начальная ширина полоски здоровья
+
+    public float invincibilityTime = 0.5f; // Длительность неуязвимости в секундах
+    private bool isInvincible = false; // Флаг неуязвимости
+    private float invincibilityTimer = 0f; // Таймер неуязвимости
+
+    private SpriteRenderer enemySpriteRenderer; // Ссылка на SpriteRenderer врага
+
+    void Awake()
     {
-        levelParent = transform.parent; // Assign the parent of the enemy to levelParent
+        levelParent = transform.parent; // Присваиваем родителя врага levelParent
+        healthBar = transform.Find("HealthBar"); // Получаем ссылку на объект полосы здоровья
+        enemySpriteRenderer = GetComponent<SpriteRenderer>(); // Получаем ссылку на SpriteRenderer врага
+
+        // Инициализация текущего здоровья
+        currentHealth = maxHealth;
+        initialHealthBarWidth = healthBar.localScale.x;
     }
 
+    void Update()
+    {
+        // Обновляем таймер неуязвимости
+        if (isInvincible)
+        {
+            invincibilityTimer -= Time.deltaTime;
+            if (invincibilityTimer <= 0)
+            {
+                isInvincible = false;
+                enemySpriteRenderer.color = Color.white; // Возвращаем обычный цвет
+            }
+        }
+    }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0)
+        if (!isInvincible) // Проверяем, неуязвим ли враг
         {
-            DropItem();
-            Destroy(gameObject);
+            currentHealth -= damage;
+            UpdateHealthBar(); // Обновляем полоску здоровья
+
+            if (currentHealth <= 0)
+            {
+                DropItem();
+                Destroy(gameObject);
+            }
+
+            isInvincible = true; // Включаем неуязвимость
+            invincibilityTimer = invincibilityTime; // Устанавливаем время неуязвимости
+            StartCoroutine(FlashWhite()); // Запускаем корутину для эффекта окраски
+        }
+    }
+
+    private IEnumerator FlashWhite()
+    {
+        // Изменяем цвет на белый (или другой цвет для эффекта)
+        enemySpriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f); // Ждем 0.2 секунды
+        // Возвращаем обычный цвет
+        enemySpriteRenderer.color = Color.white;
+    }
+
+    void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            // Вычисляем долю оставшегося здоровья
+            float healthPercentage = (float)currentHealth / maxHealth;
+            healthBar.localScale = new Vector3(initialHealthBarWidth * healthPercentage, healthBar.localScale.y, healthBar.localScale.z);
         }
     }
 
@@ -41,7 +98,6 @@ public class Enemy : MonoBehaviour
             {
                 GameObject weaponToDrop = weaponPrefabs[Random.Range(0, weaponPrefabs.Length)];
                 drop1 = Instantiate(weaponToDrop, transform.position, Quaternion.identity);
-                
             }
         }
         else if (randomValue < healthDropChance)
@@ -53,13 +109,11 @@ public class Enemy : MonoBehaviour
             drop1 = Instantiate(coinPrefab, transform.position, Quaternion.identity);
         }
         if (drop1 != null && levelParent != null)
-    {
-        Debug.Log("Drop Position before parenting: " + drop1.transform.position);
-        Debug.Log("Level Parent Position: " + levelParent.position);
-        drop1.transform.SetParent(levelParent, worldPositionStays: true);
-        Debug.Log("Drop Position after parenting: " + drop1.transform.position);
+        {
+            drop1.transform.SetParent(levelParent, worldPositionStays: true);
+        }
     }
-    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

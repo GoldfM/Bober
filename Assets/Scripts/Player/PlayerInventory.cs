@@ -18,11 +18,6 @@ public class PlayerInventory : MonoBehaviour
         {
             SwitchWeapon();
         }
-
-        if (Input.GetMouseButtonDown(0) && currentWeapon != null)
-        {
-            currentWeapon.Attack();
-        }
     }
 
     public void AddWeapon(Weapon weaponPrefab)

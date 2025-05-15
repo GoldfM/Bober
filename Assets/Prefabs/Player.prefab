@@ -125,8 +125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  health: 999
+  health: 100
   maxHP: 100
+  playerSpriteRenderer: {fileID: 4379239436064619528}
   healthBar: {fileID: 0}
 --- !u!114 &6125300211145139354
 MonoBehaviour:
@@ -371,11 +372,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1575014642719942550, guid: 92ee9814ad8544d4187e02ee59062ff2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.58
+      value: 0.478
       objectReference: {fileID: 0}
     - target: {fileID: 1575014642719942550, guid: 92ee9814ad8544d4187e02ee59062ff2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.06
+      value: 0.016
       objectReference: {fileID: 0}
     - target: {fileID: 1575014642719942550, guid: 92ee9814ad8544d4187e02ee59062ff2, type: 3}
       propertyPath: m_LocalPosition.z
