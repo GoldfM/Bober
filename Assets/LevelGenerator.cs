@@ -43,6 +43,9 @@ public class LevelGenerator : MonoBehaviour
             GameObject room = Instantiate(roomPrefab, roomPosition, Quaternion.identity);
             room.tag = "Room"; // Важно установить тег для комнаты
 
+            // Disable enemies in the room immediately after instantiation
+            DisableEnemies(room);
+
             // Get existing RoomClear component
             RoomClear roomClear = room.GetComponent<RoomClear>();
 
@@ -73,7 +76,6 @@ public class LevelGenerator : MonoBehaviour
             }
             else
             {
-                DisableEnemies(room);
                 // Disable the Entry GameObject for other rooms
                 if (roomClear.Entry != null)
                 {
@@ -123,7 +125,11 @@ public class LevelGenerator : MonoBehaviour
         {
             enemyRangeMove.enabled = false;
         }
-
+        Boss[] boss = room.GetComponentsInChildren<Boss>();
+        foreach (Boss enemyRangeMove in boss)
+        {
+            enemyRangeMove.enabled = false;
+        }
         // Get all Enemy components in the room
         Enemy[] enemies = room.GetComponentsInChildren<Enemy>();
         foreach (Enemy enemy in enemies)
@@ -176,7 +182,42 @@ public class LevelGenerator : MonoBehaviour
         Bounds bounds = roomPrefab.GetComponent<Collider2D>().bounds;
         return bounds.size.y; // Возвращаем высоту
     }
+    private void EnableEnemies(GameObject room)
+    {
+        // Get all EnemyRangeMove components in the room
+        EnemyRangeMove[] enemyRangeMoves = room.GetComponentsInChildren<EnemyRangeMove>();
+        foreach (EnemyRangeMove enemyRangeMove in enemyRangeMoves)
+        {
+            enemyRangeMove.enabled = true;
+        }
+        // Get all Enemy components in the room
+        Enemy[] enemies = room.GetComponentsInChildren<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.enabled = true;
+        }
 
+        Boss[] boss = room.GetComponentsInChildren<Boss>();
+        foreach (Boss enemy in boss)
+        {
+            enemy.enabled = true;
+        }
+        // Get all EnemyRangeWeapon components in the room
+        EnemyRangeWeapon[] enemyRangeWeapons = room.GetComponentsInChildren<EnemyRangeWeapon>();
+        foreach (EnemyRangeWeapon enemyRangeWeapon in enemyRangeWeapons)
+        {
+            enemyRangeWeapon.enabled = true;
+        }
+        // Get all GameObjects with the tag "EnemyWeapon" in the room
+        Transform[] enemyWeapons = room.GetComponentsInChildren<Transform>();
+        foreach (Transform enemyWeapon in enemyWeapons)
+        {
+            if (enemyWeapon.CompareTag("EnemyWeapon"))
+            {
+                enemyWeapon.gameObject.SetActive(true);
+            }
+        }
+    }
     // Call this method when the player enters a room
     public void ActivateRoom(int roomIndex)
     {
@@ -209,40 +250,6 @@ public class LevelGenerator : MonoBehaviour
             roomClearComponent.Entry.SetActive(true);
         }
         UpdateCameraConfiner(roomClearComponent.cameraBorder);
-    }
-
-    private void EnableEnemies(GameObject room)
-    {
-        // Get all EnemyRangeMove components in the room
-        EnemyRangeMove[] enemyRangeMoves = room.GetComponentsInChildren<EnemyRangeMove>();
-        foreach (EnemyRangeMove enemyRangeMove in enemyRangeMoves)
-        {
-            enemyRangeMove.enabled = true;
-        }
-
-        // Get all Enemy components in the room
-        Enemy[] enemies = room.GetComponentsInChildren<Enemy>();
-        foreach (Enemy enemy in enemies)
-        {
-            enemy.enabled = true;
-        }
-
-        // Get all EnemyRangeWeapon components in the room
-        EnemyRangeWeapon[] enemyRangeWeapons = room.GetComponentsInChildren<EnemyRangeWeapon>();
-        foreach (EnemyRangeWeapon enemyRangeWeapon in enemyRangeWeapons)
-        {
-            enemyRangeWeapon.enabled = true;
-        }
-
-        // Get all GameObjects with the tag "EnemyWeapon" in the room
-        Transform[] enemyWeapons = room.GetComponentsInChildren<Transform>();
-        foreach (Transform enemyWeapon in enemyWeapons)
-        {
-            if (enemyWeapon.CompareTag("EnemyWeapon"))
-            {
-                enemyWeapon.gameObject.SetActive(true);
-            }
-        }
     }
 
     public void UpdateCameraConfiner(Collider2D cameraBorder)

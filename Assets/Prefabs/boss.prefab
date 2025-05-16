@@ -298,6 +298,8 @@ MonoBehaviour:
   - {fileID: 8072372136174096949, guid: 4ac195c90ff9c0144a035d17226605b1, type: 3}
   - {fileID: 8072372136174096949, guid: 86faff18f78d70941a02c70e83ecbced, type: 3}
   - {fileID: 8072372136174096949, guid: 762d229e2cb4c3344ac325f7e2f2cc2a, type: 3}
+  acidAttackSound: {fileID: 8300000, guid: eb259ec48ccb2c64d90d24de77328d6e, type: 3}
+  regularAttackSound: {fileID: 8300000, guid: 1ba735f0d3482fd4e85a9fc16629bf4a, type: 3}
 --- !u!50 &896398042905969846
 Rigidbody2D:
   serializedVersion: 5

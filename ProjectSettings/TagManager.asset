@@ -9,6 +9,8 @@ TagManager:
   - Room
   - Walls
   - Bullet
+  - Sound
+  - Music
   layers:
   - Default
   - TransparentFX

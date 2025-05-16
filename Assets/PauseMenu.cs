@@ -52,9 +52,13 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu"); // Замените MainMenu именем сцены вашего главного меню
+    }
+    public void ReturnToHub()
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Hub"); // Замените MainMenu именем сцены вашего главного меню
     }
-
     private void SetPlayerAndWeaponControls(bool enable)
     {
         // Получаем доступ к компонентам Player и его визуальному представлению

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6327504327377705784}
   m_Layer: 0
   m_Name: Gun 2
-  m_TagString: Untagged
+  m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,6 +109,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2852000725816838326, guid: 73ade07496518ac4090841f470a701e6, type: 3}
   firePoint: {fileID: 7333426175728031953}
   fireRate: 3
+  attackSound: {fileID: 8300000, guid: 6bb3410320d2ffc448a9289f95211f28, type: 3}
 --- !u!114 &2605669610591863009
 MonoBehaviour:
   m_ObjectHideFlags: 0

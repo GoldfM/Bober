@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6391819637939225538}
   m_Layer: 0
   m_Name: Knife
-  m_TagString: Untagged
+  m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,6 +76,7 @@ MonoBehaviour:
   animator: {fileID: 4181093194854067568}
   swordCollider: {fileID: 6391819637939225538}
   damage: 20
+  attackSound: {fileID: 0}
 --- !u!212 &365550963070889773
 SpriteRenderer:
   m_ObjectHideFlags: 0

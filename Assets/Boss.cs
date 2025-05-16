@@ -16,6 +16,11 @@ public class Boss : MonoBehaviour
     public int damageAmount = 10; // Урон, наносимый при атаке
     public GameObject[] enemyPrefabs; // Массив префабов врагов для призыва
 
+    public AudioClip acidAttackSound; // Звук для ядовитого удара
+    public AudioClip regularAttackSound; // Звук для обычного выстрела
+    private AudioSource audioSource;
+    private AudioManager audioManager; // Ссылка на AudioManager
+
     private float nextAttackTime = 0f;
     private float nextMoveTime = 0f;
     private Vector3 targetPoint;
@@ -23,6 +28,28 @@ public class Boss : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        // Получаем компонент AudioSource или добавляем его, если его нет
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.tag = "Sound";
+        }
+
+        // Получаем экземпляр AudioManager через GameObject.Find
+        GameObject audioManagerObject = GameObject.Find("AudioManager");
+        if (audioManagerObject != null)
+        {
+            audioManager = audioManagerObject.GetComponent<AudioManager>();
+            if (audioManager == null)
+            {
+                Debug.LogError("AudioManager компонент не найден на объекте AudioManager!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Объект AudioManager не найден на сцене!");
+        }
         SetRandomTargetPoint();
     }
 
@@ -116,6 +143,11 @@ public class Boss : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * 10f; // Задайте скорость снаряда
+        // Воспроизводим звук обычного выстрела
+        if (regularAttackSound != null && audioManager != null)
+        {
+            audioManager.PlayOneShotSound(audioSource, regularAttackSound);
+        }
     }
 
     private IEnumerator ChargeAndSpreadAttack()
@@ -134,6 +166,11 @@ public class Boss : MonoBehaviour
     {
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         projectile.GetComponent<Rigidbody2D>().linearVelocity = direction * 10f; // Задайте скорость снаряда
+        // Воспроизводим звук обычного выстрела
+        if (regularAttackSound != null && audioManager != null)
+        {
+            audioManager.PlayOneShotSound(audioSource, regularAttackSound);
+        }
     }
 
     private IEnumerator SummonEnemy()
@@ -158,6 +195,12 @@ public class Boss : MonoBehaviour
 
         // Задаем направление и скорость пуле
         acidProjectile.SetDirection(direction, acidBulletSpeed);
+
+        // Воспроизводим звук кислотной атаки
+        if (acidAttackSound != null && audioManager != null)
+        {
+            audioManager.PlayOneShotSound(audioSource, acidAttackSound);
+        }
         yield return null;
     }
 }
