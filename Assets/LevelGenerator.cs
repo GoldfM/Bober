@@ -49,6 +49,7 @@ public class LevelGenerator : MonoBehaviour
             // Find Entry and Exit objects - adjust the names to match your prefabs
             roomClear.Entry = FindDeepChild(room.transform, "Entry")?.gameObject;
             roomClear.Exit = FindDeepChild(room.transform, "Exit")?.gameObject;
+            roomClear.cameraBorder = FindDeepChild(room.transform, "CameraBorder")?.GetComponent<Collider2D>();
 
             if (roomClear.Entry == null)
             {
@@ -58,18 +59,17 @@ public class LevelGenerator : MonoBehaviour
             {
                 Debug.LogError("Exit object not found in the room!");
             }
+            if (roomClear.cameraBorder == null)
+            {
+                Debug.LogError("CameraBorder object not found in the room!");
+            }
 
             // Handle Entry for the first room
             if (i == 0)
             {
                 // Set Entry to null for the first room
                 roomClear.Entry = null;
-                CinemachineConfiner confiner = GameObject.Find("CinemachineCamera")
-                    .GetComponent<CinemachineConfiner>();
-                // Устанавливаем Bounding Shape 2D
-                confiner.m_BoundingShape2D = room.GetComponent<Collider2D>();
-                // Обновляем границы камеры
-                confiner.InvalidateCache();
+                UpdateCameraConfiner(roomClear.cameraBorder);
             }
             else
             {
@@ -89,12 +89,24 @@ public class LevelGenerator : MonoBehaviour
             if (i > 0)
             {
                 // Определяем позицию для создания моста
-                Vector2 tunnelPosition = new Vector2((float)0.5+roomPosition.x - roomWidth / 2 - tunnelLength / 2, roomPosition.y + GetRoomHeight(roomPrefab) / 2);
-                Tunnel tunnel = CreateCorridor(tunnelPosition).GetComponent<Tunnel>();
+                Vector2 tunnelPosition = new Vector2((float)0.5 + roomPosition.x - roomWidth / 2 - tunnelLength / 2, roomPosition.y + GetRoomHeight(roomPrefab) / 2);
+                GameObject tunnelGameObject = CreateCorridor(tunnelPosition);
+                Tunnel tunnel = tunnelGameObject.GetComponent<Tunnel>();
 
                 // Set previous and next room references
                 tunnel.previousRoom = previousRoom;
                 tunnel.nextRoom = roomClear;
+                tunnel.cameraBorder = FindDeepChild(tunnelGameObject.transform, "CameraBorder")?.GetComponent<Collider2D>();
+
+                if (tunnel.cameraBorder == null)
+                {
+                    Debug.LogError("CameraBorder object not found in the tunnel!");
+                }
+
+                // Set the camera confiner to the tunnel's camera border on creation
+                // This assumes the player might start in a tunnel
+                // Consider moving this logic to the tunnel's OnTriggerEnter2D
+                //UpdateCameraConfiner(tunnel.cameraBorder);
             }
 
             // Обновляем позицию выхода для следующей комнаты
@@ -196,6 +208,7 @@ public class LevelGenerator : MonoBehaviour
         {
             roomClearComponent.Entry.SetActive(true);
         }
+        UpdateCameraConfiner(roomClearComponent.cameraBorder);
     }
 
     private void EnableEnemies(GameObject room)
@@ -230,5 +243,12 @@ public class LevelGenerator : MonoBehaviour
                 enemyWeapon.gameObject.SetActive(true);
             }
         }
+    }
+
+    public void UpdateCameraConfiner(Collider2D cameraBorder)
+    {
+        CinemachineConfiner confiner = GameObject.Find("CinemachineCamera").GetComponent<CinemachineConfiner>();
+        confiner.m_BoundingShape2D = cameraBorder;
+        confiner.InvalidateCache();
     }
 }

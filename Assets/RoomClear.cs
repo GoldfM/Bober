@@ -4,6 +4,7 @@ public class RoomClear : MonoBehaviour
 {
     public GameObject Entry;
     public GameObject Exit;
+    public Collider2D cameraBorder; // Reference to the CameraBorder collider
     public int roomIndex; // Индекс комнаты
     public LevelGenerator levelGenerator; // Ссылка на LevelGenerator
 
@@ -16,10 +17,7 @@ public class RoomClear : MonoBehaviour
         {
             // Activate the room when the player enters
             levelGenerator.ActivateRoom(roomIndex);
-            roomActivated = true; // Устанавливаем флаг, чтобы комната не активировалась снова
-
-            // Disable the trigger after activation
-            GetComponent<Collider2D>().enabled = false;
+            roomActivated = true;
         }
     }
 
