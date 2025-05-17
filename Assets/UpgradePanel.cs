@@ -2,197 +2,211 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class UpgradePanel : MonoBehaviour
 {
- public float baseDamageMultiplierIncrease = 0.1f;
- public int baseHealthIncrease = 50;
- public int baseUpgradeCost = 40;
+    [Header("Base Stats - Damage")]
+    public bool hasDamageUpgrade = true;
+    public float baseDamageMultiplierIncrease = 0.2f; // Изменили на 0.2
+    public int baseDamageUpgradeCost = 40;
+    public TextMeshProUGUI damageLevelText;
+    public TextMeshProUGUI damageValueText; // Здесь будет отображаться DamageMultiplier
+    public TextMeshProUGUI damageUpgradeCostText;
+    public Button damageUpgradeButton;
+    private int currentDamageLevel = 1;
+    private int damageUpgradeCost;
+    private const string DamageMultiplierKey = "DamageMultiplier";
+    private const string DamageKey = "Damage"; // Damage теперь коэффициент
+    private const string DamageLevelKey = "DamageLevel"; // Ключ для уровня урона
+    private const string DamageUpgradeCostKey = "DamageUpgradeCost";
 
+    [Header("Base Stats - Health")]
+    public bool hasHealthUpgrade = true;
+    public int baseHealthIncrease = 50;
+    public int baseHealthUpgradeCost = 40;
+    public TextMeshProUGUI healthLevelText;
+    public TextMeshProUGUI healthValueText;
+    public TextMeshProUGUI healthUpgradeCostText;
+    public Button healthUpgradeButton;
+    private int currentHealthLevel = 1;
+    private int healthUpgradeCost;
+    private const string MaxHealthKey = "MaxHealth";
+    private const string HealthKey = "Health";
+    private const string HealthLevelKey = "HealthLevel"; // Ключ для уровня здоровья
+    private const string HealthUpgradeCostKey = "HealthUpgradeCost";
 
- public float costIncreaseFactor = 1.5f;
+    [Header("Upgrade Configuration")]
+    public float costIncreaseFactor = 1.5f;
 
+    [Header("Balance Display")]
+    public TextMeshProUGUI balanceText; // Ссылка на текстовое поле баланса
+    private const string CurrencyKey = "PlayerScore";
 
- public TextMeshProUGUI damageLevelText;
- public TextMeshProUGUI damageValueText;
- public TextMeshProUGUI damageUpgradeCostText;
- public Button damageUpgradeButton;
+    void Start()
+    {
+        LoadData();
+        InitializeUpgradeCosts();
+        UpdateUI();
+    }
 
+    private void InitializeUpgradeCosts()
+    {
+        if (hasDamageUpgrade)
+        {
+            damageUpgradeCost = PlayerPrefs.GetInt(DamageUpgradeCostKey, baseDamageUpgradeCost);
+        }
+        if (hasHealthUpgrade)
+        {
+            healthUpgradeCost = PlayerPrefs.GetInt(HealthUpgradeCostKey, baseHealthUpgradeCost);
+        }
+    }
 
- public TextMeshProUGUI healthLevelText;
- public TextMeshProUGUI healthValueText;
- public TextMeshProUGUI healthUpgradeCostText;
- public Button healthUpgradeButton;
+    public void UpgradeDamage()
+    {
+        if (hasDamageUpgrade)
+        {
+            TryUpgrade(damageUpgradeCost, () =>
+            {
+                DamageMultiplier += baseDamageMultiplierIncrease;
+                //Damage += 50; //Удаляем
+                currentDamageLevel++;
+                damageUpgradeCost = CalculateUpgradeCost(damageUpgradeCost);
+                PlayerPrefs.SetInt(DamageUpgradeCostKey, damageUpgradeCost);
+                PlayerPrefs.SetInt(DamageLevelKey, currentDamageLevel); // Сохраняем уровень урона
+                PlayerPrefs.Save();
+                return true;
+            });
+        }
+    }
 
+    public void UpgradeHealth()
+    {
+        if (hasHealthUpgrade)
+        {
+            TryUpgrade(healthUpgradeCost, () =>
+            {
+                MaxHealth += baseHealthIncrease;
+                Health += baseHealthIncrease;
+                currentHealthLevel++;
+                healthUpgradeCost = CalculateUpgradeCost(healthUpgradeCost);
+                PlayerPrefs.SetInt(HealthUpgradeCostKey, healthUpgradeCost);
+                PlayerPrefs.SetInt(HealthLevelKey, currentHealthLevel); // Сохраняем уровень здоровья
+                PlayerPrefs.Save();
+                return true;
+            });
+        }
+    }
 
- private int currentDamageLevel = 1;
- private int currentHealthLevel = 1;
- private int damageUpgradeCost;
- private int healthUpgradeCost;
+    private void TryUpgrade(int upgradeCost, System.Func<bool> upgradeAction)
+    {
+        if (CanAffordUpgrade(upgradeCost))
+        {
+            upgradeAction.Invoke();
+            SubtractCurrency(upgradeCost);
+            UpdateUI();
+        }
+        else
+        {
+            Debug.Log("Not enough currency to upgrade!");
+        }
+    }
 
+    private bool CanAffordUpgrade(int upgradeCost)
+    {
+        return Currency >= upgradeCost;
+    }
 
- private const string CurrencyKey = "PlayerScore";
- private const string DamageMultiplierKey = "DamageMultiplier";
- private const string DamageKey = "Damage";
- private const string MaxHealthKey = "MaxHealth";
- private const string HealthKey = "Health";
- private const string DamageUpgradeCostKey = "DamageUpgradeCost";
- private const string HealthUpgradeCostKey = "HealthUpgradeCost";
+    private void SubtractCurrency(int cost)
+    {
+        Currency -= cost;
+        PlayerPrefs.SetInt(CurrencyKey, Currency);
+        PlayerPrefs.Save();
+    }
 
+    private int CalculateUpgradeCost(int currentCost)
+    {
+        return Mathf.RoundToInt(currentCost * costIncreaseFactor);
+    }
 
- void Start()
- {
- LoadData();
- PlayerPrefs.SetInt(CurrencyKey,500);
- PlayerPrefs.Save();
- if (!PlayerPrefs.HasKey(DamageUpgradeCostKey))
- {
- damageUpgradeCost = baseUpgradeCost;
- healthUpgradeCost = baseUpgradeCost;
- }
- else
- {
- damageUpgradeCost = PlayerPrefs.GetInt(DamageUpgradeCostKey);
- healthUpgradeCost = PlayerPrefs.GetInt(HealthUpgradeCostKey);
- }
- UpdateUI();
- }
+    private void UpdateUI()
+    {
+        if (hasDamageUpgrade)
+        {
+            damageLevelText.text = "Lvl " + currentDamageLevel;
+            damageValueText.text = DamageMultiplier.ToString("F2"); // Отображаем DamageMultiplier (формат с двумя знаками после запятой)
+            damageUpgradeCostText.text = damageUpgradeCost.ToString();
+        }
 
+        if (hasHealthUpgrade)
+        {
+            healthLevelText.text = "Lvl " + currentHealthLevel;
+            healthValueText.text = MaxHealth.ToString();
+            healthUpgradeCostText.text = healthUpgradeCost.ToString();
+        }
 
- public void UpgradeDamage()
- {
- if (CanAffordUpgrade(damageUpgradeCost))
- {
- DamageMultiplier += baseDamageMultiplierIncrease;
- Damage += 50;
- SubtractCurrency(damageUpgradeCost);
- currentDamageLevel++;
- damageUpgradeCost = CalculateUpgradeCost(damageUpgradeCost);
- PlayerPrefs.SetInt(DamageUpgradeCostKey, damageUpgradeCost);
- PlayerPrefs.Save();
- UpdateUI();
- }
- else
- {
- Debug.Log("Not enough currency to upgrade damage!");
- }
- }
+        // Обновляем текстовое поле баланса
+        balanceText.text = $"Баланс: {Currency}";
+    }
 
+    private void LoadData()
+    {
+        Currency = PlayerPrefs.GetInt(CurrencyKey, 500);
+        DamageMultiplier = PlayerPrefs.GetFloat(DamageMultiplierKey, 1.0f);
+        Damage = PlayerPrefs.GetFloat(DamageKey, 1.0f); // Damage теперь коэффициент
+        MaxHealth = PlayerPrefs.GetInt(MaxHealthKey, 40);
+        Health = PlayerPrefs.GetInt(HealthKey, 40);
 
- public void UpgradeHealth()
- {
- if (CanAffordUpgrade(healthUpgradeCost))
- {
- MaxHealth += baseHealthIncrease;
- Health += baseHealthIncrease;
- SubtractCurrency(healthUpgradeCost);
- currentHealthLevel++;
- healthUpgradeCost = CalculateUpgradeCost(healthUpgradeCost);
- PlayerPrefs.SetInt(HealthUpgradeCostKey, healthUpgradeCost);
- PlayerPrefs.Save();
- UpdateUI();
- }
- else
- {
- Debug.Log("Not enough currency to upgrade health!");
- }
- }
+        // Загружаем уровни из PlayerPrefs
+        currentDamageLevel = PlayerPrefs.GetInt(DamageLevelKey, 1);
+        currentHealthLevel = PlayerPrefs.GetInt(HealthLevelKey, 1);
+    }
 
+    public int Currency
+    {
+        get => PlayerPrefs.GetInt(CurrencyKey, 500);
+        set
+        {
+            PlayerPrefs.SetInt(CurrencyKey, value);
+            PlayerPrefs.Save();
+        }
+    }
 
- private bool CanAffordUpgrade(int upgradeCost)
- {
- return Currency >= upgradeCost;
- }
+    public float DamageMultiplier
+    {
+        get => PlayerPrefs.GetFloat(DamageMultiplierKey, 1.0f);
+        set
+        {
+            PlayerPrefs.SetFloat(DamageMultiplierKey, value);
+            PlayerPrefs.Save();
+        }
+    }
 
+    public float Damage
+    {
+        get => PlayerPrefs.GetFloat(DamageKey, 1.0f); // Damage теперь коэффициент
+        set
+        {
+            PlayerPrefs.SetFloat(DamageKey, value);
+            PlayerPrefs.Save();
+        }
+    }
 
- private void SubtractCurrency(int cost)
- {
- Currency -= cost;
- PlayerPrefs.SetInt(CurrencyKey,Currency);
- PlayerPrefs.Save();
- }
+    public int MaxHealth
+    {
+        get => PlayerPrefs.GetInt(MaxHealthKey, 40);
+        set
+        {
+            PlayerPrefs.SetInt(MaxHealthKey, value);
+            PlayerPrefs.Save();
+        }
+    }
 
-
- private int CalculateUpgradeCost(int currentCost)
- {
- return Mathf.RoundToInt(currentCost * costIncreaseFactor);
- }
-
-
- private void UpdateUI()
- {
- damageLevelText.text = "Lvl " + currentDamageLevel;
- damageValueText.text = Damage.ToString();
- damageUpgradeCostText.text = damageUpgradeCost.ToString();
-
-
- healthLevelText.text = "Lvl " + currentHealthLevel;
- healthValueText.text = MaxHealth.ToString();
- healthUpgradeCostText.text = healthUpgradeCost.ToString();
- }
-
-
- private void LoadData()
- {
- Currency = PlayerPrefs.GetInt(CurrencyKey, 500);
- DamageMultiplier = PlayerPrefs.GetFloat(DamageMultiplierKey, 1.0f);
- Damage = PlayerPrefs.GetInt(DamageKey, 100);
- MaxHealth = PlayerPrefs.GetInt(MaxHealthKey, 40);
- Health = PlayerPrefs.GetInt(HealthKey, 40);
- }
-
-
- public int Currency
- {
- get { return PlayerPrefs.GetInt(CurrencyKey, 500); }
- set
- {
- PlayerPrefs.SetInt(CurrencyKey, value);
- PlayerPrefs.Save();
- }
- }
-
-
- public float DamageMultiplier
- {
- get { return PlayerPrefs.GetFloat(DamageMultiplierKey, 1.0f); }
- set
- {
- PlayerPrefs.SetFloat(DamageMultiplierKey, value);
- PlayerPrefs.Save();
- }
- }
-
-
- public int Damage
- {
- get { return PlayerPrefs.GetInt(DamageKey, 100); }
- set
- {
- PlayerPrefs.SetInt(DamageKey, value);
- PlayerPrefs.Save();
- }
- }
-
-
- public int MaxHealth
- {
- get { return PlayerPrefs.GetInt(MaxHealthKey, 40); }
- set
- {
- PlayerPrefs.SetInt(MaxHealthKey, value);
- PlayerPrefs.Save();
- }
- }
-
-
- public int Health
- {
- get { return PlayerPrefs.GetInt(HealthKey, 40); }
- set
- {
- PlayerPrefs.SetInt(HealthKey, value);
- PlayerPrefs.Save();
- }
- }
+    public int Health
+    {
+        get => PlayerPrefs.GetInt(HealthKey, 40);
+        set
+        {
+            PlayerPrefs.SetInt(HealthKey, value);
+            PlayerPrefs.Save();
+        }
+    }
 }

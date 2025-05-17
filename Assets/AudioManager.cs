@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
@@ -14,6 +16,16 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager Instance { get; private set; } // Singleton instance
 
+    [System.Serializable]
+    public struct SceneMusic
+    {
+        public string sceneName;
+        public AudioClip musicClip;
+    }
+
+    public List<SceneMusic> sceneMusicList = new List<SceneMusic>();
+    private AudioSource musicSource;
+
     void Awake()
     {
         // Singleton pattern
@@ -27,6 +39,12 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        // Create AudioSource for music
+        musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.loop = true;
+        musicSource.volume = musicVolume;
+        musicSource.tag = "Music";
     }
 
     void OnEnable()
@@ -72,6 +90,37 @@ public class AudioManager : MonoBehaviour
         if (soundsSlider != null)
         {
             soundsSlider.value = soundsVolume;
+        }
+
+        // Play music for current scene
+        PlayMusicForCurrentScene();
+    }
+
+    void PlayMusicForCurrentScene()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        foreach (SceneMusic sceneMusic in sceneMusicList)
+        {
+            if (sceneMusic.sceneName == sceneName)
+            {
+                PlayMusic(sceneMusic.musicClip);
+                return;
+            }
+        }
+        Debug.LogWarning("No music found for scene: " + sceneName);
+        musicSource.Stop(); // Stop music if no clip is found
+    }
+
+    void PlayMusic(AudioClip clip)
+    {
+        if (musicSource.clip != clip)
+        {
+            musicSource.clip = clip;
+            musicSource.Play();
+        }
+        else if (!musicSource.isPlaying)
+        {
+            musicSource.Play();
         }
     }
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7325324766394606849}
   m_Layer: 0
   m_Name: Coin
-  m_TagString: Untagged
+  m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinValue: 1
+  coinSound: {fileID: 0}
 --- !u!58 &7325324766394606849
 CircleCollider2D:
   m_ObjectHideFlags: 0

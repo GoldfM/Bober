@@ -457,6 +457,9 @@ MonoBehaviour:
   soundsVolume: 0.75
   musicSlider: {fileID: 409633065}
   soundsSlider: {fileID: 1304997342}
+  sceneMusicList:
+  - sceneName: MainMenu
+    musicClip: {fileID: 8300000, guid: 2f6d75a9aae42e7438649b9711ec90b2, type: 3}
 --- !u!4 &70134808
 Transform:
   m_ObjectHideFlags: 0
