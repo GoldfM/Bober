@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     private bool isInvincible = false; // Флаг неуязвимости
     private float invincibilityTimer = 0f; // Таймер неуязвимости
 
+    private float damageMultiplier; // Коэффициент урона
+
     private void Awake()
     {
         Instance = this;
@@ -29,6 +31,9 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<movement>();
+
+        // Загружаем коэффициент урона из PlayerPrefs при старте
+        damageMultiplier = PlayerPrefs.GetFloat("DamageMultiplier", 1.0f);
     }
 
     void Update()
@@ -62,6 +67,18 @@ public class Player : MonoBehaviour
             isInvincible = true; // Включаем неуязвимость
             invincibilityTimer = invincibilityTime; // Устанавливаем время неуязвимости
         }
+    }
+
+    // Функция для восстановления здоровья
+    public void Heal(int healAmount)
+    {
+        health += healAmount;
+        // Убедитесь, что здоровье не превышает максимальное
+        if (health > maxHP)
+        {
+            health = maxHP;
+        }
+        healthBar.UpdateHealthBar();
     }
 
     private void PlayDamageSound()
@@ -106,5 +123,11 @@ public class Player : MonoBehaviour
         playerMovement.RemoveSlow();
         isAcid = false;
         playerSpriteRenderer.color = Color.white;
+    }
+
+    // Метод для получения коэффициента урона
+    public float GetDamageMultiplier()
+    {
+        return damageMultiplier;
     }
 }

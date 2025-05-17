@@ -6,7 +6,7 @@ public class MeleeWeapon : Weapon
     public float fireRate = 0.5f;
     public Animator animator;
     public Collider2D swordCollider;
-    public int damage = 20;
+    public int damage = 20; // Базовый урон оружия
     private float nextFire = 0f;
     public AudioClip attackSound; // Звук атаки
     private AudioSource audioSource;
@@ -67,13 +67,10 @@ public class MeleeWeapon : Weapon
         }
 
         transform.localScale = scale;
-
-
     }
 
     public override void Attack()
     {
-
         animator.SetInteger("IsAttack", 1);
         swordCollider.enabled = true;
         // Воспроизводим звук атаки, если он задан и AudioManager найден
@@ -89,12 +86,23 @@ public class MeleeWeapon : Weapon
         swordCollider.enabled = false;
         nextFire = Time.time + fireRate;
     }
+
     void OnTriggerEnter2D(Collider2D hit)
     {
+        if (hit.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(hit.gameObject); // Уничтожаем пулю
+        }
+
         Enemy enemy = hit.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage);
+            // Получаем коэффициент урона игрока
+            float damageMultiplier = Player.Instance.GetDamageMultiplier();
+            // Рассчитываем итоговый урон
+            int totalDamage = Mathf.RoundToInt(damage * damageMultiplier);
+            // Наносим урон врагу
+            enemy.TakeDamage(totalDamage);
         }
     }
 }

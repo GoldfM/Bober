@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
     public Weapon meleeWeaponSlot;
     public Weapon rangedWeaponSlot;
     public Weapon currentWeapon;
-    //private Vector3 FixScale = new Vector3((float)0.5,(float)0.5,0);
+
     void Start()
     {
         EquipWeapon(meleeWeaponSlot);
@@ -30,7 +30,6 @@ public class PlayerInventory : MonoBehaviour
         switch (weapon.Type)
         {
             case WeaponType.Melee:
-                weapon.transform.position = meleeWeaponSlot.transform.position;
                 if (meleeWeaponSlot != null)
                 {
                     DropWeapon(meleeWeaponSlot);
@@ -50,20 +49,17 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    void EquipWeapon(Weapon weapon)
+    public void EquipWeapon(Weapon weapon)
     {
         if (weapon != null)
         {
             if (currentWeapon != null)
             {
                 currentWeapon.gameObject.SetActive(false);
-                //currentWeapon.OnUnequip();
             }
             currentWeapon = weapon;
             currentWeapon.gameObject.SetActive(true);
-            currentWeapon.transform.rotation = new Quaternion(0,0,0,0);
-           // currentWeapon.transform.localScale=FixScale;
-            //currentWeapon.OnEquip();
+            currentWeapon.transform.rotation = Quaternion.identity;
         }
     }
 
@@ -86,14 +82,8 @@ public class PlayerInventory : MonoBehaviour
     {
         if (weapon != null)
         {
-            //weapon.OnUnequip();
             weapon.transform.SetParent(null);
             weapon.gameObject.SetActive(true);
-            //добавляем скрипт подбора
-            if (weapon.pickupPrefab != null)
-            {
-                GameObject droppedWeapon = Instantiate(weapon.pickupPrefab, transform.position, Quaternion.identity);
-            }
             Destroy(weapon.gameObject);
         }
     }

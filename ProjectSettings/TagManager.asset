@@ -11,6 +11,7 @@ TagManager:
   - Bullet
   - Sound
   - Music
+  - PlayerStart
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,7 @@ public class RangedWeapon : Weapon
     public Transform firePoint;
     public float fireRate = 0.5f;
     private float nextFire = 0f;
+    public int damage = 10; // Базовый урон оружия
     public AudioClip attackSound; // Звук атаки
     private AudioSource audioSource;
     private AudioManager audioManager; // Ссылка на AudioManager
@@ -48,7 +49,12 @@ public class RangedWeapon : Weapon
 
     public override void Attack()
     {
-        Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        // Создаем пулю
+        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+        // Получаем компонент Bullet и устанавливаем базовый урон
+        Bullet bulletComponent = bullet.GetComponent<Bullet>();
+        bulletComponent.damage = damage; // Устанавливаем урон пули
 
         // Воспроизводим звук атаки, если он задан и AudioManager найден
         if (attackSound != null && audioManager != null)

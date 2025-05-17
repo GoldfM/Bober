@@ -9654,6 +9654,8 @@ MonoBehaviour:
   cameraBorder: {fileID: 0}
   roomIndex: 0
   levelGenerator: {fileID: 0}
+  isBossRoom: 0
+  hatch: {fileID: 0}
 --- !u!1001 &587128403054579450
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -455,11 +455,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicVolume: 0.5
   soundsVolume: 0.75
-  musicSlider: {fileID: 409633065}
-  soundsSlider: {fileID: 1304997342}
   sceneMusicList:
   - sceneName: MainMenu
     musicClip: {fileID: 8300000, guid: 2f6d75a9aae42e7438649b9711ec90b2, type: 3}
+  - sceneName: Hub
+    musicClip: {fileID: 8300000, guid: 7f727b1ce425b6f458b056f9ffdcb650, type: 3}
+  - sceneName: SampleScene
+    musicClip: {fileID: 8300000, guid: 71d8b40c29e691644853fc1ff85eac51, type: 3}
+  musicSlider: {fileID: 0}
+  soundsSlider: {fileID: 0}
 --- !u!4 &70134808
 Transform:
   m_ObjectHideFlags: 0
@@ -864,6 +868,7 @@ GameObject:
   m_Component:
   - component: {fileID: 409633064}
   - component: {fileID: 409633065}
+  - component: {fileID: 409633066}
   m_Layer: 0
   m_Name: SliderMusic
   m_TagString: Untagged
@@ -940,22 +945,24 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.19
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 70134807}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: SetMusicVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &409633066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409633063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f59664c8f68df41b98feecb8ffa7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 409633065}
+  isMusicSlider: 1
 --- !u!1 &459587473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,6 +1645,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298327610}
   m_CullTransparentMesh: 1
+--- !u!1 &1302913038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1302913040}
+  - component: {fileID: 1302913039}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1302913039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302913038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b4320915351c594e8289eb0be0e3815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSlider: {fileID: 409633065}
+  soundsSlider: {fileID: 1304997342}
+--- !u!4 &1302913040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302913038}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 427.03452, y: 247.65465, z: 0.62539446}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1304997340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,6 +1701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1304997341}
   - component: {fileID: 1304997342}
+  - component: {fileID: 1304997343}
   m_Layer: 0
   m_Name: SliderSound
   m_TagString: Untagged
@@ -1727,19 +1781,21 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 70134807}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: SetSoundsVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1304997343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304997340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f59664c8f68df41b98feecb8ffa7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1304997342}
+  isMusicSlider: 0
 --- !u!1 &1318393479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2536,3 +2592,4 @@ SceneRoots:
   - {fileID: 578449602}
   - {fileID: 784412627}
   - {fileID: 70134808}
+  - {fileID: 1302913040}

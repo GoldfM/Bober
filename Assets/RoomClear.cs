@@ -4,20 +4,29 @@ public class RoomClear : MonoBehaviour
 {
     public GameObject Entry;
     public GameObject Exit;
-    public Collider2D cameraBorder; // Reference to the CameraBorder collider
-    public int roomIndex; // Индекс комнаты
-    public LevelGenerator levelGenerator; // Ссылка на LevelGenerator
+    public Collider2D cameraBorder;
+    public int roomIndex;
+    public LevelGenerator levelGenerator;
+    public bool isBossRoom = false; // New bool field to indicate if the room is a boss room
+    public GameObject hatch; // Field for the hatch object
 
     private bool roomCleared = false;
-    private bool roomActivated = false; // Флаг, чтобы комната активировалась только один раз
+    private bool roomActivated = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!roomActivated && other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             // Activate the room when the player enters
-            levelGenerator.ActivateRoom(roomIndex);
-            roomActivated = true;
+            if (!roomActivated)
+            {
+                levelGenerator.ActivateRoom(roomIndex);
+                roomActivated = true;
+            }
+            else
+            {
+                levelGenerator.UpdateCameraConfiner(cameraBorder);
+            }
         }
     }
 
@@ -35,29 +44,33 @@ public class RoomClear : MonoBehaviour
             {
                 Exit.SetActive(false);
             }
+
+            if (isBossRoom && hatch != null)
+            {
+                hatch.SetActive(true); // Activate the hatch if it's a boss room
+            }
+
             roomCleared = true;
         }
     }
 
     private bool AreAllEnemiesDead()
     {
-        // Check for Enemy components
         Enemy[] enemies = GetComponentsInChildren<Enemy>();
         if (enemies.Length > 0)
         {
-            return false; // Enemies with the Enemy component still exist
+            return false;
         }
 
-        // Check for GameObjects with the tag "Enemy"
         Transform[] enemyObjects = GetComponentsInChildren<Transform>();
         foreach (Transform enemyObject in enemyObjects)
         {
             if (enemyObject != transform && enemyObject.CompareTag("Enemy"))
             {
-                return false; // Found an enemy with the "Enemy" tag
+                return false;
             }
         }
 
-        return true; // No enemies found by either method
+        return true;
     }
 }

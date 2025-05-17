@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6860900436660978415}
   - component: {fileID: 2605669610591863009}
   - component: {fileID: -6327504327377705784}
+  - component: {fileID: 8364234548087970241}
   m_Layer: 0
   m_Name: Gun 2
   m_TagString: Sound
@@ -108,7 +109,8 @@ MonoBehaviour:
   pickupPrefab: {fileID: 5876249987314921897, guid: 119d0d0d190bd494c994c97bffdf8e61, type: 3}
   projectilePrefab: {fileID: 2852000725816838326, guid: 73ade07496518ac4090841f470a701e6, type: 3}
   firePoint: {fileID: 7333426175728031953}
-  fireRate: 3
+  fireRate: 1.5
+  damage: 60
   attackSound: {fileID: 8300000, guid: 6bb3410320d2ffc448a9289f95211f28, type: 3}
 --- !u!114 &2605669610591863009
 MonoBehaviour:
@@ -138,6 +140,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
+--- !u!114 &8364234548087970241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876249987314921897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495617eee1b780d4f8e6f84867162089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5876249987314921897}
 --- !u!1 &6868195497963990884
 GameObject:
   m_ObjectHideFlags: 0

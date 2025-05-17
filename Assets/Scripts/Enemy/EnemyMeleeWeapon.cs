@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class EnemyMeleeWeapon : MonoBehaviour
 {
-    public int numberOfAttackAnimations = 3; // Количество анимаций атаки (от 1 до этого числа)
+    public int numberOfAttackAnimations = 2; // Количество анимаций атаки (от 1 до этого числа)
     public float fireCD = 1f;
+    public int damage = 10; // Урон от дубинки
 
     private float nextFireTime = 0;
     private Transform player;
@@ -51,5 +52,13 @@ public class EnemyMeleeWeapon : MonoBehaviour
     public void ResetAttackNumber()
     {
         animator.SetInteger(attackNumberHash, 0);
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Player player = other.GetComponent<Player>();
+        if (player != null)
+        {
+            player.TakeDamage(damage);
+        }
     }
 }

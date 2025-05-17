@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: -6860900436660978415}
   - component: {fileID: 2605669610591863009}
   - component: {fileID: -6327504327377705784}
+  - component: {fileID: -3022472122290494437}
   m_Layer: 0
-  m_Name: Gun 1
+  m_Name: Gun 5
   m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5876249987314921897}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0293, y: 0.0013, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.4}
   m_ConstrainProportionsScale: 0
@@ -108,7 +109,8 @@ MonoBehaviour:
   pickupPrefab: {fileID: 5876249987314921897, guid: 5d6d7d876fb896e46a6a9890dd7081c3, type: 3}
   projectilePrefab: {fileID: 2852000725816838326, guid: 0f110480306a92f45989226cc7a6938a, type: 3}
   firePoint: {fileID: 7333426175728031953}
-  fireRate: 2
+  fireRate: 0.6
+  damage: 15
   attackSound: {fileID: 8300000, guid: 0e77ccf8b31047f478b34bb94335b48a, type: 3}
 --- !u!114 &2605669610591863009
 MonoBehaviour:
@@ -138,6 +140,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
+--- !u!114 &-3022472122290494437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876249987314921897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495617eee1b780d4f8e6f84867162089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5876249987314921897}
 --- !u!1 &6868195497963990884
 GameObject:
   m_ObjectHideFlags: 0

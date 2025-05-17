@@ -24,7 +24,7 @@ public class Heal : MonoBehaviour
         {
             Player player = other.GetComponent<Player>();
             // Увеличиваем счетчик хилки
-            player.TakeDamage(-healValue);
+            player.Heal(healValue);
 
             // Воспроизводим звук
             if (healSound != null && audioManager != null)

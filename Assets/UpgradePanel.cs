@@ -6,17 +6,16 @@ public class UpgradePanel : MonoBehaviour
 {
     [Header("Base Stats - Damage")]
     public bool hasDamageUpgrade = true;
-    public float baseDamageMultiplierIncrease = 0.2f; // Изменили на 0.2
+    public float baseDamageMultiplierIncrease = 0.2f;
     public int baseDamageUpgradeCost = 40;
     public TextMeshProUGUI damageLevelText;
-    public TextMeshProUGUI damageValueText; // Здесь будет отображаться DamageMultiplier
+    public TextMeshProUGUI damageValueText;
     public TextMeshProUGUI damageUpgradeCostText;
     public Button damageUpgradeButton;
     private int currentDamageLevel = 1;
     private int damageUpgradeCost;
     private const string DamageMultiplierKey = "DamageMultiplier";
-    private const string DamageKey = "Damage"; // Damage теперь коэффициент
-    private const string DamageLevelKey = "DamageLevel"; // Ключ для уровня урона
+    private const string DamageLevelKey = "DamageLevel";
     private const string DamageUpgradeCostKey = "DamageUpgradeCost";
 
     [Header("Base Stats - Health")]
@@ -30,15 +29,14 @@ public class UpgradePanel : MonoBehaviour
     private int currentHealthLevel = 1;
     private int healthUpgradeCost;
     private const string MaxHealthKey = "MaxHealth";
-    private const string HealthKey = "Health";
-    private const string HealthLevelKey = "HealthLevel"; // Ключ для уровня здоровья
+    private const string HealthLevelKey = "HealthLevel";
     private const string HealthUpgradeCostKey = "HealthUpgradeCost";
 
     [Header("Upgrade Configuration")]
     public float costIncreaseFactor = 1.5f;
 
     [Header("Balance Display")]
-    public TextMeshProUGUI balanceText; // Ссылка на текстовое поле баланса
+    public TextMeshProUGUI balanceText;
     private const string CurrencyKey = "PlayerScore";
 
     void Start()
@@ -67,11 +65,10 @@ public class UpgradePanel : MonoBehaviour
             TryUpgrade(damageUpgradeCost, () =>
             {
                 DamageMultiplier += baseDamageMultiplierIncrease;
-                //Damage += 50; //Удаляем
                 currentDamageLevel++;
                 damageUpgradeCost = CalculateUpgradeCost(damageUpgradeCost);
                 PlayerPrefs.SetInt(DamageUpgradeCostKey, damageUpgradeCost);
-                PlayerPrefs.SetInt(DamageLevelKey, currentDamageLevel); // Сохраняем уровень урона
+                PlayerPrefs.SetInt(DamageLevelKey, currentDamageLevel);
                 PlayerPrefs.Save();
                 return true;
             });
@@ -85,11 +82,10 @@ public class UpgradePanel : MonoBehaviour
             TryUpgrade(healthUpgradeCost, () =>
             {
                 MaxHealth += baseHealthIncrease;
-                Health += baseHealthIncrease;
                 currentHealthLevel++;
                 healthUpgradeCost = CalculateUpgradeCost(healthUpgradeCost);
                 PlayerPrefs.SetInt(HealthUpgradeCostKey, healthUpgradeCost);
-                PlayerPrefs.SetInt(HealthLevelKey, currentHealthLevel); // Сохраняем уровень здоровья
+                PlayerPrefs.SetInt(HealthLevelKey, currentHealthLevel);
                 PlayerPrefs.Save();
                 return true;
             });
@@ -132,7 +128,7 @@ public class UpgradePanel : MonoBehaviour
         if (hasDamageUpgrade)
         {
             damageLevelText.text = "Lvl " + currentDamageLevel;
-            damageValueText.text = DamageMultiplier.ToString("F2"); // Отображаем DamageMultiplier (формат с двумя знаками после запятой)
+            damageValueText.text = DamageMultiplier.ToString("F2");
             damageUpgradeCostText.text = damageUpgradeCost.ToString();
         }
 
@@ -143,7 +139,6 @@ public class UpgradePanel : MonoBehaviour
             healthUpgradeCostText.text = healthUpgradeCost.ToString();
         }
 
-        // Обновляем текстовое поле баланса
         balanceText.text = $"Баланс: {Currency}";
     }
 
@@ -151,13 +146,10 @@ public class UpgradePanel : MonoBehaviour
     {
         Currency = PlayerPrefs.GetInt(CurrencyKey, 500);
         DamageMultiplier = PlayerPrefs.GetFloat(DamageMultiplierKey, 1.0f);
-        Damage = PlayerPrefs.GetFloat(DamageKey, 1.0f); // Damage теперь коэффициент
-        MaxHealth = PlayerPrefs.GetInt(MaxHealthKey, 40);
-        Health = PlayerPrefs.GetInt(HealthKey, 40);
-
-        // Загружаем уровни из PlayerPrefs
+        MaxHealth = PlayerPrefs.GetInt(MaxHealthKey, 100);
         currentDamageLevel = PlayerPrefs.GetInt(DamageLevelKey, 1);
         currentHealthLevel = PlayerPrefs.GetInt(HealthLevelKey, 1);
+        PlayerPrefs.SetInt("CurrentHealth", MaxHealth);
     }
 
     public int Currency
@@ -180,19 +172,9 @@ public class UpgradePanel : MonoBehaviour
         }
     }
 
-    public float Damage
-    {
-        get => PlayerPrefs.GetFloat(DamageKey, 1.0f); // Damage теперь коэффициент
-        set
-        {
-            PlayerPrefs.SetFloat(DamageKey, value);
-            PlayerPrefs.Save();
-        }
-    }
-
     public int MaxHealth
     {
-        get => PlayerPrefs.GetInt(MaxHealthKey, 40);
+        get => PlayerPrefs.GetInt(MaxHealthKey, 100);
         set
         {
             PlayerPrefs.SetInt(MaxHealthKey, value);
@@ -200,12 +182,12 @@ public class UpgradePanel : MonoBehaviour
         }
     }
 
-    public int Health
+        public int Health
     {
-        get => PlayerPrefs.GetInt(HealthKey, 40);
+        get => PlayerPrefs.GetInt("Health", 100);
         set
         {
-            PlayerPrefs.SetInt(HealthKey, value);
+            PlayerPrefs.SetInt("Health", value);
             PlayerPrefs.Save();
         }
     }

@@ -5,6 +5,7 @@ public class EnemyRangeWeapon : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float fireRate = 1f;
+    public int bulletDamage; // Урон пули
 
     private float nextFireTime = 0;
     private Transform player;
@@ -54,6 +55,7 @@ public class EnemyRangeWeapon : MonoBehaviour
         if (bullet != null)
         {
             bullet.SetDirection(direction);
+            bullet.damage = bulletDamage; // Передаем урон пуле
         }
     }
 }

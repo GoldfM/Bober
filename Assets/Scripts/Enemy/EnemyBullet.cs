@@ -31,13 +31,17 @@ public class EnemyBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.GetComponent<Player>();
-        if (player != null)
+        if (other.gameObject.CompareTag("Player"))
         {
-            player.TakeDamage(damage);
-            Destroy(gameObject);
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+                Destroy(gameObject);
+            }
         }
-        if (other.tag == "Walls"){
+        if (other.CompareTag("Walls"))
+        {
             Destroy(gameObject);
         }
     }

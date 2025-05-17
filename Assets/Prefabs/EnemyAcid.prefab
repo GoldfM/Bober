@@ -237,8 +237,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c96ae8d7388bb46b0f9e1077d552d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
-  damage: 5
+  baseMaxHealth: 30
+  currentHealth: 0
+  baseDamage: 15
   coinPrefab: {fileID: 3208735130746201606, guid: 41cd0cccdf9458644b076606cba14904, type: 3}
   healthPickupPrefab: {fileID: 3208735130746201606, guid: 1c834d9cbb4caa74bb037b1dfdd68ba8, type: 3}
   weaponPrefabs:
@@ -246,9 +247,13 @@ MonoBehaviour:
   - {fileID: 5876249987314921897, guid: fc1b598a3d92d554cb5d66e7e76a7cbd, type: 3}
   - {fileID: 1175262591671716177, guid: 03fa14b518830b140a5a7054cfb088c5, type: 3}
   - {fileID: 5876249987314921897, guid: 119d0d0d190bd494c994c97bffdf8e61, type: 3}
-  coinDropChance: 0.6
-  healthDropChance: 0.4
+  coinDropChance: 0.4
+  healthDropChance: 0.2
   weaponDropChance: 0.1
+  healthIncreasePerLevel: 1.1
+  damageIncreasePerLevel: 1.05
+  invincibilityTime: 0.5
+  damage: 5
 --- !u!70 &1776152565102786052
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

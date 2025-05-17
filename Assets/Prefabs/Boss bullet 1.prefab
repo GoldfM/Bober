@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4632411736370040691}
   - component: {fileID: -3952304300745494714}
   - component: {fileID: -1334740401634277335}
+  - component: {fileID: 4613728290598532444}
   m_Layer: 0
   m_Name: Boss bullet 1
   m_TagString: Untagged
@@ -154,7 +155,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0.1875, z: 0.125, w: 0.0625}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.4033816, y: 0.5465839}
     oldSize: {x: 1, y: 1}
     newSize: {x: 0.08, y: 0.03}
     adaptiveTilingThreshold: 0.5
@@ -175,9 +176,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7546c0c549bf2c847a4d7253650d2334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
   lifeTime: 5
   initialDamage: 5
-  damagePerSecond: 10
-  slowPercentage: 0.8
+  damagePerSecond: 5
+  slowPercentage: 0.5
   slowDuration: 3
+--- !u!95 &4613728290598532444
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852000725816838326}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5bf2685d1a912c49bdde05fce6d0cc8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

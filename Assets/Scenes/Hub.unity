@@ -814,6 +814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 233827602}
   - component: {fileID: 233827603}
+  - component: {fileID: 233827604}
   m_Layer: 0
   m_Name: SliderMusic
   m_TagString: Untagged
@@ -893,19 +894,21 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: SetMusicVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &233827604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233827601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f59664c8f68df41b98feecb8ffa7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 233827603}
+  isMusicSlider: 1
 --- !u!1 &312561516
 GameObject:
   m_ObjectHideFlags: 0
@@ -2501,6 +2504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 816139910}
   - component: {fileID: 816139911}
+  - component: {fileID: 816139912}
   m_Layer: 0
   m_Name: SliderSound
   m_TagString: Untagged
@@ -2580,19 +2584,21 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: SetSoundsVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &816139912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816139909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f59664c8f68df41b98feecb8ffa7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 816139911}
+  isMusicSlider: 0
 --- !u!1 &830077228
 GameObject:
   m_ObjectHideFlags: 0
@@ -3758,6 +3764,7 @@ GameObject:
   - component: {fileID: 1105596956}
   - component: {fileID: 1105596955}
   - component: {fileID: 1105596957}
+  - component: {fileID: 1105596958}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3895,6 +3902,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f56008af1438846b4a37c9777d7d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1105596958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105596953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136f4a8133606204b9bd4f618c484508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasDamageUpgrade: 0
+  baseDamageMultiplierIncrease: 0
+  baseDamageUpgradeCost: 0
+  damageLevelText: {fileID: 0}
+  damageValueText: {fileID: 0}
+  damageUpgradeCostText: {fileID: 0}
+  damageUpgradeButton: {fileID: 0}
+  hasHealthUpgrade: 0
+  baseHealthIncrease: 0
+  baseHealthUpgradeCost: 0
+  healthLevelText: {fileID: 0}
+  healthValueText: {fileID: 0}
+  healthUpgradeCostText: {fileID: 0}
+  healthUpgradeButton: {fileID: 0}
+  costIncreaseFactor: 0
+  balanceText: {fileID: 1105596955}
 --- !u!1 &1131232777
 GameObject:
   m_ObjectHideFlags: 0
@@ -12370,6 +12405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1383129841}
   - component: {fileID: 1383129840}
+  - component: {fileID: 1383129842}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -12406,6 +12442,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1383129842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383129839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b4320915351c594e8289eb0be0e3815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSlider: {fileID: 233827603}
+  soundsSlider: {fileID: 816139911}
 --- !u!1 &1383326112
 GameObject:
   m_ObjectHideFlags: 0
@@ -16451,8 +16501,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 4.6875
+  m_Offset: {x: -0.046319764, y: 0.45811573}
+  m_Radius: 0.8316931
 --- !u!212 &1930912201
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16497,12 +16547,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c86de110bbfc5764a93d081cb6c645f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9555d74edb8077041b02a5cb7279b0de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 9.375, y: 7.0625}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -16517,8 +16567,8 @@ Transform:
   m_GameObject: {fileID: 1930912199}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.84, y: -1.21, z: 0}
-  m_LocalScale: {x: 0.31915274, y: 0.31915274, z: 0.31915274}
+  m_LocalPosition: {x: 9.84, y: -2.77, z: 0}
+  m_LocalScale: {x: 0.8300684, y: 2.0142994, z: 1.1067579}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
