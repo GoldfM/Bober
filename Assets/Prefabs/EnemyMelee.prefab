@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c89dfac105a93641b4d6a824b3524d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 3
   chaseDuration: 6
   wanderDuration: 2
   idleDuration: 1
@@ -442,6 +442,9 @@ MonoBehaviour:
   coinDropChance: 0.4
   healthDropChance: 0.2
   weaponDropChance: 0.1
+  guaranteedCoins: 5
+  additionalCoinMin: 3
+  additionalCoinMax: 5
   healthIncreasePerLevel: 1.1
   damageIncreasePerLevel: 1.05
   invincibilityTime: 0.5

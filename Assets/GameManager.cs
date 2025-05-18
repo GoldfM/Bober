@@ -1,10 +1,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System; // Добавляем пространство имен System для работы с событиями
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public int currentLevel = 1;
+    private int _currentLevel = 1; // Приватное поле для хранения текущего уровня
+
+    public event Action<int> OnLevelChanged; // Событие, вызываемое при изменении уровня
+
+    public int currentLevel
+    {
+        get { return _currentLevel; }
+        set
+        {
+            _currentLevel = value;
+            OnLevelChanged?.Invoke(_currentLevel); // Вызываем событие при изменении уровня
+        }
+    }
 
     // Копии префабов оружия
     private GameObject StoredMeleeWeaponPrefabCopy;

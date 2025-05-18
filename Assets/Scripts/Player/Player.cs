@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI; // Для доступа к компонентам UI
 using System.Collections;
+using TMPro; // Для доступа к TextMeshPro
 
 public class Player : MonoBehaviour
 {
@@ -14,12 +16,17 @@ public class Player : MonoBehaviour
     private bool isAcid;
     private Rigidbody2D rb;
     public static Player Instance { get; private set; }
-
+    private AudioManager audioManager; // Ссылка на AudioManager
     public float invincibilityTime = 0.5f; // Длительность неуязвимости в секундах
     private bool isInvincible = false; // Флаг неуязвимости
     private float invincibilityTimer = 0f; // Таймер неуязвимости
 
     private float damageMultiplier; // Коэффициент урона
+
+    public GameObject gameOverPanel; // Ссылка на панель GameOver
+    public TMP_Text reachedLevelText; // TextMeshPro для показа достигнутого уровня на панели GameOver
+    public TMP_Text recordLevelText; // TextMeshPro для показа рекордного уровня на панели GameOver
+    public GameObject newRecordText; // GameObject для показа "НОВЫЙ РЕКОРД"
 
     private void Awake()
     {
@@ -34,6 +41,45 @@ public class Player : MonoBehaviour
 
         // Загружаем коэффициент урона из PlayerPrefs при старте
         damageMultiplier = PlayerPrefs.GetFloat("DamageMultiplier", 1.0f);
+        GameObject audioManagerObject = GameObject.Find("AudioManager");
+        if (audioManagerObject != null)
+        {
+            audioManager = audioManagerObject.GetComponent<AudioManager>();
+            if (audioManager == null)
+            {
+                Debug.LogError("AudioManager компонент не найден на объекте AudioManager!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Объект AudioManager не найден на сцене!");
+        }
+
+        // Убедимся, что панель GameOver деактивирована при старте
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Панель GameOver не назначена!");
+        }
+
+        // Инициализация TextMeshPro
+        if (reachedLevelText == null || recordLevelText == null)
+        {
+            Debug.LogError("TextMeshPro компоненты не назначены!");
+        }
+
+        // Убедимся, что текст "НОВЫЙ РЕКОРД" деактивирован при старте
+        if (newRecordText != null)
+        {
+            newRecordText.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Текст 'НОВЫЙ РЕКОРД' не назначен!");
+        }
     }
 
     void Update()
@@ -55,13 +101,20 @@ public class Player : MonoBehaviour
         if (!isInvincible) // Проверяем, неуязвим ли игрок
         {
             health -= damage;
+
+            // Устанавливаем минимальное значение здоровья
+            if (health < 0)
+            {
+                health = 0;
+            }
+
             healthBar.UpdateHealthBar();
             PlayDamageSound();
             StartCoroutine(FlashRed());
 
             if (health <= 0)
             {
-                Destroy(gameObject);
+                Die(); // Вызываем метод Die() при смерти
             }
 
             isInvincible = true; // Включаем неуязвимость
@@ -85,7 +138,7 @@ public class Player : MonoBehaviour
     {
         if (damageSound != null && audioSource != null)
         {
-            audioSource.PlayOneShot(damageSound);
+            audioManager.PlayOneShotSound(audioSource, damageSound);
         }
     }
 
@@ -129,5 +182,67 @@ public class Player : MonoBehaviour
     public float GetDamageMultiplier()
     {
         return damageMultiplier;
+    }
+
+    // Метод для обработки смерти игрока
+
+
+    private void Die()
+    {
+        // Ставим игру на паузу
+        Time.timeScale = 0;
+
+        // Обновляем и сохраняем максимальный уровень
+        int currentLevel = GameManager.Instance.currentLevel;
+        int maxLevel = PlayerPrefs.GetInt("MaxLevel", 1); // Получаем максимальный уровень из PlayerPrefs, по умолчанию 1
+
+        bool isNewRecord = false;
+        if (currentLevel > maxLevel)
+        {
+            maxLevel = currentLevel;
+            PlayerPrefs.SetInt("MaxLevel", maxLevel);
+            PlayerPrefs.Save(); // Сохраняем изменения
+            isNewRecord = true;
+        }
+
+        // Активируем панель GameOver
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+
+            // Обновляем TextMeshPro текст на панели GameOver
+            reachedLevelText.text = "Ты достиг: " + currentLevel;
+            recordLevelText.text = "Рекорд: " + maxLevel;
+
+            // Активируем текст "НОВЫЙ РЕКОРД", если установлен новый рекорд
+            if (newRecordText != null)
+            {
+                newRecordText.SetActive(isNewRecord);
+            }
+        }
+        else
+        {
+            Debug.LogError("Панель GameOver не назначена!");
+        }
+
+        // Отключаем скрипты игрока, чтобы он не двигался и не атаковал
+
+        movement playerMovement = GetComponent<movement>();
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+
+        PlayerInventory playerInventory = GetComponent<PlayerInventory>();
+        if (playerInventory != null)
+        {
+            playerInventory.enabled = false;
+        }
+
+        this.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        playerSpriteRenderer.enabled = false;
+        rb.linearVelocity = Vector2.zero; // Останавливаем движение
+        Destroy(transform.gameObject);
     }
 }

@@ -46,6 +46,7 @@ public class PauseMenu : MonoBehaviour
     public void RestartLevel()
     {
         Time.timeScale = 1f;
+        PlayerPrefs.SetInt("CurrentHealth", PlayerPrefs.GetInt("MaxHealth"));
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

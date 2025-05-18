@@ -24,6 +24,7 @@ public class Boss : MonoBehaviour
     private float nextAttackTime = 0f;
     private float nextMoveTime = 0f;
     private Vector3 targetPoint;
+    private Transform bossParent; // Ссылка на родителя босса
 
     void Start()
     {
@@ -51,6 +52,12 @@ public class Boss : MonoBehaviour
             Debug.LogError("Объект AudioManager не найден на сцене!");
         }
         SetRandomTargetPoint();
+
+        bossParent = transform.parent; // Присваиваем родителя босса
+        if (bossParent == null)
+        {
+            Debug.LogError("Босс не имеет родителя!");
+        }
     }
 
     void Update()
@@ -180,7 +187,14 @@ public class Boss : MonoBehaviour
 
         // Создание нового врага
         Vector3 spawnPosition = transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
-        Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+        GameObject spawnedEnemy = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+
+        // Устанавливаем врага как дочерний по отношению к родителю босса
+        if (bossParent != null)
+        {
+            spawnedEnemy.transform.SetParent(bossParent);
+        }
+
         yield return null;
     }
 

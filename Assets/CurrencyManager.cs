@@ -7,7 +7,7 @@ public class CurrencyManager : MonoBehaviour
     public TextMeshProUGUI  coinText;
     void Start()
     {
-        coins = PlayerPrefs.GetInt("PlayerScore", 0); // Загрузка монет
+        coins = PlayerPrefs.GetInt("PlayerScore", 150); // Загрузка монет
         Debug.Log(coins);
         Debug.Log(coins);
         Debug.Log(coins);

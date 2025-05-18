@@ -3,7 +3,7 @@ using TMPro; // Подключаем пространство имен TextMeshP
 
 public class ScoreManager : MonoBehaviour
 {
-    public int score = 0; // Текущий счет
+    public int score = 150; // Текущий счет
     public TMP_Text scoreText; // Ссылка на TextMeshPro Text
     private const string ScoreKey = "PlayerScore"; // Ключ для сохранения счета
 
@@ -49,7 +49,7 @@ public class ScoreManager : MonoBehaviour
         }
         else
         {
-            score = 0; // Если нет сохраненного счета, начинаем с нуля
+            score = 150; // Если нет сохраненного счета, начинаем с нуля
             Debug.Log("No score saved, starting from 0");
         }
     }

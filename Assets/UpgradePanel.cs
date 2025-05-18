@@ -144,7 +144,7 @@ public class UpgradePanel : MonoBehaviour
 
     private void LoadData()
     {
-        Currency = PlayerPrefs.GetInt(CurrencyKey, 500);
+        Currency = PlayerPrefs.GetInt(CurrencyKey, 150);
         DamageMultiplier = PlayerPrefs.GetFloat(DamageMultiplierKey, 1.0f);
         MaxHealth = PlayerPrefs.GetInt(MaxHealthKey, 100);
         currentDamageLevel = PlayerPrefs.GetInt(DamageLevelKey, 1);
@@ -178,16 +178,7 @@ public class UpgradePanel : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt(MaxHealthKey, value);
-            PlayerPrefs.Save();
-        }
-    }
-
-        public int Health
-    {
-        get => PlayerPrefs.GetInt("Health", 100);
-        set
-        {
-            PlayerPrefs.SetInt("Health", value);
+            PlayerPrefs.SetInt("CurrentHealth", value);
             PlayerPrefs.Save();
         }
     }

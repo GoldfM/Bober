@@ -7,7 +7,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject[] roomPrefabs;
     public GameObject[] bossRoomPrefabs;
     public GameObject tunnelPrefab;
-    public int numberOfRooms = 5;
+    public int baseNumberOfRooms = 5;
     public float roomWidth = 37f;
     public float tunnelLength = 8f;
 
@@ -24,8 +24,16 @@ public class LevelGenerator : MonoBehaviour
         GenerateLevel();
     }
 
+    // Вычисляем количество комнат на основе уровня
+    private int CalculateNumberOfRooms()
+    {
+        int additionalRooms = GameManager.Instance.currentLevel / 3;
+        return baseNumberOfRooms + additionalRooms;
+    }
+
     public void GenerateLevel()
     {
+        int numberOfRooms = CalculateNumberOfRooms(); // Получаем вычисленное количество комнат
         Vector2 lastRoomExit = Vector2.zero;
         RoomClear previousRoom = null;
 
@@ -101,18 +109,6 @@ public class LevelGenerator : MonoBehaviour
                 {
                     Debug.LogError("CameraBorder object not found in the tunnel!");
                 }
-                //tunnel.previousRoom = previousRoom;
-                //tunnel.nextRoom = roomClear;
-                //tunnel.cameraBorder = FindDeepChild(tunnelGameObject.transform, "CameraBorder")?.GetComponent<Collider2D>();
-
-                //if (tunnel.cameraBorder == null)
-                //{
-                //    Debug.LogError("CameraBorder object not found in the tunnel!");
-                //}
-                //Set the camera confiner to the tunnel's camera border on creation
-                //This assumes the player might start in a tunnel
-                //Consider moving this logic to the tunnel's OnTriggerEnter2D
-                //UpdateCameraConfiner(tunnel.cameraBorder);
             }
 
             lastRoomExit = new Vector2(roomPosition.x + roomWidth, roomPosition.y + GetRoomHeight(roomPrefab) / 2);
@@ -126,6 +122,11 @@ public class LevelGenerator : MonoBehaviour
         foreach (EnemyRangeMove enemyRangeMove in enemyRangeMoves)
         {
             enemyRangeMove.enabled = false;
+        }
+        EnemyMeleeMove[] enemyMeleeMoves = room.GetComponentsInChildren<EnemyMeleeMove>();
+        foreach (EnemyMeleeMove enemyMeleeMove in enemyMeleeMoves)
+        {
+            enemyMeleeMove.enabled = false;
         }
         Boss[] boss = room.GetComponentsInChildren<Boss>();
         foreach (Boss enemyRangeMove in boss)
@@ -142,6 +143,11 @@ public class LevelGenerator : MonoBehaviour
         foreach (EnemyRangeWeapon enemyRangeWeapon in enemyRangeWeapons)
         {
             enemyRangeWeapon.enabled = false;
+        }
+        EnemyMeleeWeapon[] enemyMeleeWeapons = room.GetComponentsInChildren<EnemyMeleeWeapon>();
+        foreach (EnemyMeleeWeapon enemyMeleeWeapon in enemyMeleeWeapons)
+        {
+            enemyMeleeWeapon.enabled = false;
         }
 
         Transform[] enemyWeapons = room.GetComponentsInChildren<Transform>();
@@ -185,6 +191,11 @@ public class LevelGenerator : MonoBehaviour
         {
             enemyRangeMove.enabled = true;
         }
+        EnemyMeleeMove[] enemyMeleeMoves = room.GetComponentsInChildren<EnemyMeleeMove>();
+        foreach (EnemyMeleeMove enemyMeleeMove in enemyMeleeMoves)
+        {
+            enemyMeleeMove.enabled = true;
+        }
         Enemy[] enemies = room.GetComponentsInChildren<Enemy>();
         foreach (Enemy enemy in enemies)
         {
@@ -200,6 +211,11 @@ public class LevelGenerator : MonoBehaviour
         foreach (EnemyRangeWeapon enemyRangeWeapon in enemyRangeWeapons)
         {
             enemyRangeWeapon.enabled = true;
+        }
+        EnemyMeleeWeapon[] enemyMeleeWeapons = room.GetComponentsInChildren<EnemyMeleeWeapon>();
+        foreach (EnemyMeleeWeapon enemyMeleeWeapon in enemyMeleeWeapons)
+        {
+            enemyMeleeWeapon.enabled = true;
         }
         Transform[] enemyWeapons = room.GetComponentsInChildren<Transform>();
         foreach (Transform enemyWeapon in enemyWeapons)
