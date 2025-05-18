@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class PlayerInventory : MonoBehaviour
     public Weapon meleeWeaponSlot;
     public Weapon rangedWeaponSlot;
     public Weapon currentWeapon;
+    private Animator currentWeaponAnimator; // Ссылка на аниматор текущего оружия
 
     void Start()
     {
@@ -35,18 +37,16 @@ public class PlayerInventory : MonoBehaviour
                     DropWeapon(meleeWeaponSlot);
                 }
                 meleeWeaponSlot = weapon;
-                EquipWeapon(meleeWeaponSlot);
                 break;
             case WeaponType.Ranged:
-                 weapon.transform.position = rangedWeaponSlot.transform.position;
                 if (rangedWeaponSlot != null)
                 {
                     DropWeapon(rangedWeaponSlot);
                 }
                 rangedWeaponSlot = weapon;
-                EquipWeapon(rangedWeaponSlot);
                 break;
         }
+        EquipWeapon(weapon);
     }
 
     public void EquipWeapon(Weapon weapon)
@@ -55,11 +55,20 @@ public class PlayerInventory : MonoBehaviour
         {
             if (currentWeapon != null)
             {
+                // Сбрасываем состояние текущего оружия перед переключением
+                ResetWeaponState(currentWeapon);
                 currentWeapon.gameObject.SetActive(false);
             }
             currentWeapon = weapon;
             currentWeapon.gameObject.SetActive(true);
             currentWeapon.transform.rotation = Quaternion.identity;
+
+            currentWeaponAnimator = currentWeapon.GetComponent<Animator>();// Получаем ссылку на аниматор
+
+            if (weapon.Type == WeaponType.Melee)
+            {
+                weapon.transform.GetComponent<Collider2D>().enabled = false;
+            }
         }
     }
 
@@ -85,6 +94,26 @@ public class PlayerInventory : MonoBehaviour
             weapon.transform.SetParent(null);
             weapon.gameObject.SetActive(true);
             Destroy(weapon.gameObject);
+        }
+    }
+
+    // Функция для сброса состояния оружия (анимации и коллайдера)
+    private void ResetWeaponState(Weapon weapon)
+    {
+        if (weapon != null)
+        {
+            Collider2D weaponCollider = weapon.GetComponent<Collider2D>();
+            if (weaponCollider != null)
+            {
+                weaponCollider.enabled = false; // Выключаем коллайдер
+            }
+
+            Animator weaponAnimator = weapon.GetComponent<Animator>();
+            if (weaponAnimator != null)
+            {
+                weaponAnimator.Rebind(); // Перезапускаем аниматор
+                weaponAnimator.Update(0f); // Прокручиваем аниматор в начальное состояние
+            }
         }
     }
 }
